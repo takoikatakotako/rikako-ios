@@ -1,0 +1,167 @@
+name: rikako
+options:
+  deploymentTarget:
+    iOS: 14.0
+  #postGenCommand: bundle exec pod install
+
+packages:
+  R.swift.Library:
+    url: https://github.com/mac-cain13/R.swift.Library
+    from: 5.2.2
+
+schemes:
+  Local:
+    build:
+      targets:
+        RikakoLocal: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+      gatherCoverageData: false
+      targets:
+        - name: RikakoTests
+          parallelizable: true
+          randomExecutionOrder: true
+  Staging:
+    build:
+      targets:
+        RikakoStaging: all
+    run:
+      config: Debug
+  Production:
+    build:
+      targets:
+        RikakoProduction: all
+    run:
+      config: Debug
+
+targets:
+  RikakoLocal:
+    type: application
+    platform: iOS
+    deploymentTarget: "14.0"
+    sources:
+      - path: Rikako
+      - path: Config/Local
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: jp.rikako.local
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: 5RH346BQ66
+        INFOPLIST_FILE: Config/Local/Info.plist
+        MARKETING_VERSION: 3.0.0
+        CURRENT_PROJECT_VERSION: 1
+        TARGETED_DEVICE_FAMILY: 1
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+      configs:
+        Debug:
+          GAD_APPLICATION_IDENTIFER: ca-app-pub-3940256099942544~1458002511
+          ADMOB_ALARM_LIST: ca-app-pub-3940256099942544/2934735716
+          ADMOB_CONFIG: ca-app-pub-3940256099942544/2934735716
+        Release:
+          GAD_APPLICATION_IDENTIFER: ca-app-pub-3940256099942544~1458002511
+          ADMOB_ALARM_LIST: ca-app-pub-3940256099942544/2934735716
+          ADMOB_CONFIG: ca-app-pub-3940256099942544/2934735716
+    dependencies:
+      - package: R.swift.Library
+        product: Rswift
+    preBuildScripts:
+      - script: ./Scripts/BuildPhases/rswift.sh
+        name: R.swift
+        inputFiles:
+          - $TEMP_DIR/rswift-lastrun
+        outputFiles:
+          - $SRCROOT/rikako/Generated/R.generated.swift
+  RikakoStaging:
+    type: application
+    platform: iOS
+    deploymentTarget: "14.0"
+    sources:
+      - path: Rikako
+      - path: Config/Staging
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: jp.rikako.staging
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: 5RH346BQ66
+        INFOPLIST_FILE: Config/Staging/Info.plist
+        MARKETING_VERSION: 3.0.0
+        CURRENT_PROJECT_VERSION: 1
+        TARGETED_DEVICE_FAMILY: 1
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+      configs:
+        Debug:
+          GAD_APPLICATION_IDENTIFER: ca-app-pub-3940256099942544~1458002511
+          ADMOB_ALARM_LIST: ca-app-pub-3940256099942544/2934735716
+          ADMOB_CONFIG: ca-app-pub-3940256099942544/2934735716
+        Release:
+          GAD_APPLICATION_IDENTIFER: ca-app-pub-3940256099942544~1458002511
+          ADMOB_ALARM_LIST: ca-app-pub-3940256099942544/2934735716
+          ADMOB_CONFIG: ca-app-pub-3940256099942544/2934735716
+    dependencies:
+      - package: R.swift.Library
+        product: Rswift
+    preBuildScripts:
+      - script: ./Scripts/BuildPhases/rswift.sh
+        name: R.swift
+        inputFiles:
+          - $TEMP_DIR/rswift-lastrun
+        outputFiles:
+          - $SRCROOT/rikako/Generated/R.generated.swift
+  RikakoProduction:
+    type: application
+    platform: iOS
+    deploymentTarget: "14.0"
+    sources:
+      - path: Rikako
+      - path: Config/Production
+    dependencies:
+      - package: R.swift.Library
+        product: Rswift
+    preBuildScripts:
+      - script: ./Scripts/BuildPhases/rswift.sh
+        name: R.swift
+        inputFiles:
+          - $TEMP_DIR/rswift-lastrun
+        outputFiles:
+          - $SRCROOT/rikako/Generated/R.generated.swift
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: jp.rikako
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: 5RH346BQ66
+        INFOPLIST_FILE: Config/Production/Info.plist
+        MARKETING_VERSION: 3.0.0
+        CURRENT_PROJECT_VERSION: 1
+        TARGETED_DEVICE_FAMILY: 1
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+      configs:
+        Debug:
+          GAD_APPLICATION_IDENTIFER: ca-app-pub-5587141252700968~9053558907
+          ADMOB_ALARM_LIST: ca-app-pub-5587141252700968/8220227024
+          ADMOB_CONFIG: ca-app-pub-5587141252700968/1355204268
+        Release:
+          GAD_APPLICATION_IDENTIFER: ca-app-pub-5587141252700968~9053558907
+          ADMOB_ALARM_LIST: ca-app-pub-5587141252700968/8220227024
+          ADMOB_CONFIG: ca-app-pub-5587141252700968/1355204268
+  RikakoTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - rikakoTests
+    settings:
+      base:
+        INFOPLIST_FILE: rikakoTests/Info.plist
+    dependencies:
+      - target: RikakoLocal
+  RikakoUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - rikakoUITests
+    settings:
+      base:
+        INFOPLIST_FILE: rikakoUITests/Info.plist
+    dependencies:
+      - target: RikakoLocal
