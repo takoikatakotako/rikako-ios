@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  rikako
-//
-//  Created by junpei ono on 2021/02/17.
-//
-
 import SwiftUI
 
 struct ContentView: View {
