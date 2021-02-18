@@ -71,7 +71,7 @@ struct QuestionView: View {
             
         }
         .sheet(isPresented: $viewModel.showingModal) {
-            Text("xxxxxxx")
+            QuestionDetailView(text: "ssssssssss")
         }
         .navigationBarTitle("XXXX")
         .navigationBarTitleDisplayMode(.inline)
