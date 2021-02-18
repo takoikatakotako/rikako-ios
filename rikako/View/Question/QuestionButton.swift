@@ -14,10 +14,13 @@ struct QuestionButton: View {
             action()
         }, label: {
             Text(text)
+                .lineLimit(2)
+                .foregroundColor(Color(R.color.textBrown.name))
                 .frame(minWidth: 0, maxWidth: .infinity)
                 .frame(height: 60)
         })
-        .background(Color(R.color.main.name))
+        .background(Color(R.color.selectButton.name))
+        .cornerRadius(8)
         .padding(.horizontal, 16)
     }
 }
