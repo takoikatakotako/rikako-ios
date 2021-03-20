@@ -7,12 +7,11 @@ struct QuestionView: View {
         ZStack {
             VStack(spacing: 8) {
                 ZStack {
-                    
                     Button(action: {
                         viewModel.showingModal = true
                     }) {
                         VStack {
-                            Text("xxxxxxxxx")
+                            Text(viewModel.question.text)
                                 .foregroundColor(.black)
                                 .multilineTextAlignment(.leading)
                                 .padding()
@@ -24,43 +23,24 @@ struct QuestionView: View {
                     VStack {
                         Spacer()
                         HStack {
-                            Image("tutorial-screen1")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 90, height: 90)
-                                .background(Color.black)
-                            
-                            Image("tutorial-screen1")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 90, height: 90)
-                                .background(Color.black)
-                            
-                            Image("tutorial-screen1")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 90, height: 90)
-                                .background(Color.black)
+                            ForEach(viewModel.question.images, id: \.self) { image in
+                                Image("tutorial-screen1")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 90, height: 90)
+                                    .background(Color.black)
+                            }
                         }
                     }
                 }
                 .background(Color.orange)
                 
-                QuestionButton(text: "選択１") {
-                    
+                ForEach(viewModel.question.answers, id: \.self) { answer in
+                    QuestionButton(text: answer) {
+                        print(answer)
+                    }
                 }
-                
-                QuestionButton(text: "選択２") {
-                    
-                }
-                
-                QuestionButton(text: "選択３") {
-                    
-                }
-                
-                QuestionButton(text: "選択４") {
-                    
-                }
+
                 
                 Text("Admob")
                     .foregroundColor(Color.white)
