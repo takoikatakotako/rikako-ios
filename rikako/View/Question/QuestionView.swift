@@ -1,7 +1,11 @@
 import SwiftUI
 
 struct QuestionView: View {
-    @StateObject var viewModel = QuestionViewModel()
+    @StateObject var viewModel: QuestionViewModel
+    
+    init(questinos: [Question]) {
+        _viewModel = StateObject(wrappedValue: QuestionViewModel(questions: questinos))
+    }
     
     var body: some View {
         ZStack {
@@ -33,7 +37,6 @@ struct QuestionView: View {
                         }
                     }
                 }
-                .background(Color.orange)
                 
                 ForEach(viewModel.question.answers, id: \.self) { answer in
                     QuestionButton(text: answer) {
@@ -58,17 +61,24 @@ struct QuestionView: View {
                     .resizable()
                     .scaledToFit()
             }
+            
+            NavigationLink(
+                destination: ResultView(results: $viewModel.results),
+                isActive: $viewModel.goReultView,
+                label: {
+                    EmptyView()
+                })
         }
         .sheet(isPresented: $viewModel.showingModal) {
             QuestionDetailView(text: "ssssssssss")
         }
-        .navigationBarTitle("XXXX")
+        .navigationBarTitle("問題")
         .navigationBarTitleDisplayMode(.inline)
     }
 }
 
 struct QuestionView_Previews: PreviewProvider {
     static var previews: some View {
-        QuestionView()
+        QuestionView(questinos: [Question.mock()])
     }
 }
