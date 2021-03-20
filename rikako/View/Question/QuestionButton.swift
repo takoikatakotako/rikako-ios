@@ -21,7 +21,7 @@ struct QuestionButton: View {
         })
         .background(Color(R.color.selectButton.name))
         .cornerRadius(8)
-        .padding(.horizontal, 16)
+        .padding(.horizontal, 8)
     }
 }
 

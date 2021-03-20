@@ -37,7 +37,7 @@ struct QuestionView: View {
                 
                 ForEach(viewModel.question.answers, id: \.self) { answer in
                     QuestionButton(text: answer) {
-                        print(answer)
+                        viewModel.selectedAnswer(answer: answer)
                     }
                 }
 
