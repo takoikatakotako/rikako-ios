@@ -3,7 +3,8 @@ import AVKit
 
 class QuestionViewModel: ObservableObject {
     @Published var showingModal = false
-    
+    @Published var showingResultImage: Bool?
+    @Published var buttonDisabled: Bool = false
     var audioPlayer: AVAudioPlayer!
     
     let questions: [Question] = [
@@ -19,18 +20,28 @@ class QuestionViewModel: ObservableObject {
     }
     
     func selectedAnswer(answer: String) {
+        self.buttonDisabled = true
         if answer == question.answers[question.answer] {
             // 正解
             print("正解")
+            showingResultImage = true
+            
             let sound = NSDataAsset(name: "correct")!
             audioPlayer = try? AVAudioPlayer(data: sound.data)
             audioPlayer.play()
         } else {
             // 不正解
             print("不正解")
+            showingResultImage = false
+            
             let sound = NSDataAsset(name: "discorrect")!
             audioPlayer = try? AVAudioPlayer(data: sound.data)
             audioPlayer.play()
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            self.showingResultImage = nil
+            self.buttonDisabled = false
         }
     }
 }

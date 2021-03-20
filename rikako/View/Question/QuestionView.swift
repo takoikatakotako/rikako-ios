@@ -39,9 +39,9 @@ struct QuestionView: View {
                     QuestionButton(text: answer) {
                         viewModel.selectedAnswer(answer: answer)
                     }
+                    .disabled(viewModel.buttonDisabled)
                 }
 
-                
                 Text("Admob")
                     .foregroundColor(Color.white)
                     .frame(minWidth: 0, maxWidth: .infinity)
@@ -49,6 +49,15 @@ struct QuestionView: View {
                     .background(Color.gray)
             }
             
+            if viewModel.showingResultImage == true {
+                Image(R.image.questionCorrect.name)
+                    .resizable()
+                    .scaledToFit()
+            } else if viewModel.showingResultImage == false {
+                Image(R.image.questionDiscorrect.name)
+                    .resizable()
+                    .scaledToFit()
+            }
         }
         .sheet(isPresented: $viewModel.showingModal) {
             QuestionDetailView(text: "ssssssssss")
