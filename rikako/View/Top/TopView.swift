@@ -8,14 +8,21 @@ struct TopView: View {
         Question(questionId: 3, text: "ジャガイモにヨウ素液をたらすと何色になりますか。", images: [], answer: 3, answers: ["黒色", "黄色", "赤色", "青紫色"], comment: "ジャガイモにはでんぷんが入っているためヨウ素液をたらすと青紫色になります。", commentImages: []),
         Question(questionId: 4, text: "植物が光合成をするとき、何をすって酸素を出しますか。", images: [], answer: 2, answers: ["ちっそ", "二酸化炭素", "水素", "酸素"], comment: "光合成は二酸化炭素をすって酸素を出します。", commentImages: []),
     ]
-    
+
+    @State var showingQuestionSheet = false
+
     var body: some View {
         NavigationView {
-            NavigationLink(
-                destination: QuestionView(questinos: getRandomQuestions()),
-                label: {
-                    Text("問題画面へ")
-                })
+            VStack {
+                Button("Show") {
+                    showingQuestionSheet = true
+                }
+            }
+            .fullScreenCover(isPresented: $showingQuestionSheet){
+                NavigationView {
+                    QuestionView(questinos: getRandomQuestions(), showingSheet: $showingQuestionSheet)
+                }
+            }
         }
     }
     

@@ -2,9 +2,11 @@ import SwiftUI
 
 struct QuestionView: View {
     @StateObject var viewModel: QuestionViewModel
-    
-    init(questinos: [Question]) {
+    @Binding var showingSheet: Bool
+
+    init(questinos: [Question], showingSheet: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: QuestionViewModel(questions: questinos))
+        self._showingSheet = showingSheet
     }
     
     var body: some View {
@@ -63,7 +65,7 @@ struct QuestionView: View {
             }
             
             NavigationLink(
-                destination: ResultView(results: $viewModel.results),
+                destination: ResultView(results: $viewModel.results, showingSheet: $showingSheet),
                 isActive: $viewModel.goReultView,
                 label: {
                     EmptyView()
@@ -77,8 +79,8 @@ struct QuestionView: View {
     }
 }
 
-struct QuestionView_Previews: PreviewProvider {
-    static var previews: some View {
-        QuestionView(questinos: [Question.mock()])
-    }
-}
+//struct QuestionView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        QuestionView(questinos: [Question.mock()])
+//    }
+//}
