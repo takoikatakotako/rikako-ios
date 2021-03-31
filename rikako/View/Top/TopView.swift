@@ -83,7 +83,7 @@ struct TopView: View {
                     Text("Third")
                 }
         }
-        .accentColor(Color.red)
+        .accentColor(Color("main"))
         .background(Color.white)
         .fullScreenCover(isPresented: $showingQuestionSheet){
             NavigationView {
