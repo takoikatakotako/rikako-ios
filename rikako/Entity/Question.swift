@@ -13,6 +13,10 @@ struct Question: Identifiable, Decodable {
     let commentImages: [String]
     
     static func mock() -> Question {
-        Question(questionId: 1, text: "sss", images: [], answer: 3, answers: [], comment: "ss", commentImages: [])
+        Question(questionId: 1, text: "植物が光合成をするとき、何をすって酸素を出しますか。", images: [], answer: 2, answers: ["ちっそ", "二酸化炭素", "水素", "酸素"], comment: "光合成は二酸化炭素をすって酸素を出します。", commentImages: [])
+    }
+    
+    static func mock(questionId: Int) -> Question {
+        Question(questionId: questionId, text: "植物が光合成をするとき、何をすって酸素を出しますか。", images: [], answer: 2, answers: ["ちっそ", "二酸化炭素", "水素", "酸素"], comment: "光合成は二酸化炭素をすって酸素を出します。", commentImages: [])
     }
 }

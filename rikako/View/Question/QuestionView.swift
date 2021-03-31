@@ -65,7 +65,7 @@ struct QuestionView: View {
             }
             
             NavigationLink(
-                destination: ResultView(results: $viewModel.results, showingSheet: $showingSheet),
+                destination: ResultView(questions: viewModel.questions, results: viewModel.results, showingSheet: $showingSheet),
                 isActive: $viewModel.goReultView,
                 label: {
                     EmptyView()

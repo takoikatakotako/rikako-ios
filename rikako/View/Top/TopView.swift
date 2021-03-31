@@ -26,42 +26,65 @@ struct TopView: View {
                     Spacer()
                     HStack {
                         Text("高校受験化学")
+                            .foregroundColor(Color.white)
+                            .font(Font.system(size: 20).bold())
                         Spacer()
                         Text("達成率2.3%")
+                            .foregroundColor(Color.white)
+                            .font(Font.system(size: 20).bold())
                     }
-                    
-                    HStack {
+                    .padding(.horizontal, 8)
+                    .padding(.bottom, 4)
+
+                    HStack(spacing: 12) {
                         Button(action: {
                             showingQuestionSheet = true
                         }, label: {
-                            Text("xxx")
+                            Text("復習(23)")
+                                .foregroundColor(Color.white)
+                                .font(Font.system(size: 20).bold())
+                                .frame(minWidth: 0, maxWidth: .infinity)
+                                .frame(height: 48)
+                                .background(Color("incorrectBlue"))
+                                .cornerRadius(8)
                         })
                         
                         Button(action: {
                             showingQuestionSheet = true
                         }, label: {
-                            Text("xxx")
+                            Text("未学習(13)")
+                                .foregroundColor(Color.white)
+                                .font(Font.system(size: 20).bold())
+                                .frame(minWidth: 0, maxWidth: .infinity)
+                                .frame(height: 48)
+                                .background(Color("correctPink"))
+                                .cornerRadius(8)
                         })
                     }
-                    
+                    .padding(.horizontal, 8)
+                    .padding(.bottom, 8)
                 }
             }
             .tabItem {
                 Image(systemName: "1.square.fill")
+                    .renderingMode(.template)
                 Text("First")
             }
-            CategoryView()
+            FirstCategoryView()
                 .tabItem {
                     Image(systemName: "2.square.fill")
+                        .renderingMode(.template)
                     Text("Second")
                 }
             ConfigView()
                 .tabItem {
                     Image(systemName: "3.square.fill")
+                        .renderingMode(.template)
                     Text("Third")
                 }
         }
-        .background(Color.red)
+        .accentColor(Color.red)
+        .background(Color.white)
         .fullScreenCover(isPresented: $showingQuestionSheet){
             NavigationView {
                 QuestionView(questinos: getRandomQuestions(), showingSheet: $showingQuestionSheet)

@@ -4,6 +4,8 @@ struct ConfigView: View {
     var body: some View {
         NavigationView {
             Text("Hello, World!")
+                .navigationTitle("設定")
+                .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
