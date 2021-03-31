@@ -8,20 +8,63 @@ struct TopView: View {
         Question(questionId: 3, text: "ジャガイモにヨウ素液をたらすと何色になりますか。", images: [], answer: 3, answers: ["黒色", "黄色", "赤色", "青紫色"], comment: "ジャガイモにはでんぷんが入っているためヨウ素液をたらすと青紫色になります。", commentImages: []),
         Question(questionId: 4, text: "植物が光合成をするとき、何をすって酸素を出しますか。", images: [], answer: 2, answers: ["ちっそ", "二酸化炭素", "水素", "酸素"], comment: "光合成は二酸化炭素をすって酸素を出します。", commentImages: []),
     ]
-
+    
     @State var showingQuestionSheet = false
-
+    
     var body: some View {
-        NavigationView {
-            VStack {
-                Button("Show") {
-                    showingQuestionSheet = true
+        TabView {
+            ZStack {
+                Color("main")
+                    .ignoresSafeArea(edges: .all)
+                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                    .background(Color.red)
+                
+                VStack {
+                    Spacer()
+                    Image("top-app-logo")
+                    Image("top-rikako-standing")
+                    Spacer()
+                    HStack {
+                        Text("高校受験化学")
+                        Spacer()
+                        Text("達成率2.3%")
+                    }
+                    
+                    HStack {
+                        Button(action: {
+                            showingQuestionSheet = true
+                        }, label: {
+                            Text("xxx")
+                        })
+                        
+                        Button(action: {
+                            showingQuestionSheet = true
+                        }, label: {
+                            Text("xxx")
+                        })
+                    }
+                    
                 }
             }
-            .fullScreenCover(isPresented: $showingQuestionSheet){
-                NavigationView {
-                    QuestionView(questinos: getRandomQuestions(), showingSheet: $showingQuestionSheet)
+            .tabItem {
+                Image(systemName: "1.square.fill")
+                Text("First")
+            }
+            CategoryView()
+                .tabItem {
+                    Image(systemName: "2.square.fill")
+                    Text("Second")
                 }
+            ConfigView()
+                .tabItem {
+                    Image(systemName: "3.square.fill")
+                    Text("Third")
+                }
+        }
+        .background(Color.red)
+        .fullScreenCover(isPresented: $showingQuestionSheet){
+            NavigationView {
+                QuestionView(questinos: getRandomQuestions(), showingSheet: $showingQuestionSheet)
             }
         }
     }
