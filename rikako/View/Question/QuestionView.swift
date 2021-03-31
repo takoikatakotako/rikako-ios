@@ -29,6 +29,22 @@ struct QuestionView: View {
                     VStack {
                         Spacer()
                         HStack {
+                            Spacer()
+                            Button(action: {
+                                viewModel.showingModal = true
+                            }, label: {
+                                Text("答えを見る")
+                                    .foregroundColor(Color.white)
+                                    .font(Font.system(size: 16).bold())
+                                    .padding(.horizontal, 16)
+                                    .padding(.vertical, 8)
+                                    .background(Color("correctPink"))
+                                    .cornerRadius(4)
+                            })
+                            .padding(.horizontal, 8)
+                        }
+                        
+                        HStack {
                             ForEach(viewModel.question.images, id: \.self) { image in
                                 Image("tutorial-screen1")
                                     .resizable()
@@ -79,8 +95,16 @@ struct QuestionView: View {
     }
 }
 
-//struct QuestionView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        QuestionView(questinos: [Question.mock()])
-//    }
-//}
+struct QuestionView_Previews: PreviewProvider {
+    
+    struct PreviewWrapper: View {
+        @State var showingSheet = false
+        var body: some View {
+            QuestionView(questinos: [Question.mock()], showingSheet: $showingSheet)
+
+        }
+    }
+    static var previews: some View {
+        PreviewWrapper()
+    }
+}

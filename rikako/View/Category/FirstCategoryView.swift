@@ -4,8 +4,11 @@ struct FirstCategoryView: View {
     var body: some View {
         NavigationView {
             List {
-                Text("Hello, World!")
-                Text("Hello, World!")
+                NavigationLink(
+                    destination: SecondCategoryView(),
+                    label: {
+                        Text("Hello, World!")
+                    })
             }
             .navigationTitle("カテゴリ一覧")
             .navigationBarTitleDisplayMode(.inline)
