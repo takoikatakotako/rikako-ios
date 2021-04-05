@@ -11,21 +11,22 @@ enum SubCategoryViewAlert: Identifiable {
     }
 }
 
-//enum SubCategoryViewAlert: Identifiable {
-//    case select(Int, String)
-//    var id: Int {
-//        switch self {
-//        case let .select(categoryId, _):
-//            return categoryId
-//        }
-//    }
-//}
+enum SubCategoryViewFullScreen: Identifiable {
+    case download(Int)
+    var id: Int {
+        switch self {
+        case let .download(categoryId):
+            return categoryId
+        }
+    }
+}
 
 class SubCategoryViewModel: ObservableObject {
     private let jsonRepository = JsonRepository()
     var subscriptions = Set<AnyCancellable>()
     @Published var subCategories: [SubCategory] = []
     @Published var alert: SubCategoryViewAlert?
+    @Published var fullScreen: SubCategoryViewFullScreen?
     
     func fetchSubCategories(fileName: String) {
         jsonRepository.fetchSubCategories(fileName: fileName)
@@ -50,6 +51,6 @@ class SubCategoryViewModel: ObservableObject {
     }
     
     func downloadCategory(categoryId: Int) {
-        print(categoryId)
+        fullScreen = .download(categoryId)
     }
 }
