@@ -1,14 +1,19 @@
 import SwiftUI
 
 struct FirstCategoryView: View {
+    @StateObject var viewModel = FirstCategoryViewModel()
+    
     var body: some View {
         NavigationView {
-            List {
+            List(viewModel.mainCategories) { mainCategory in
                 NavigationLink(
-                    destination: SecondCategoryView(),
+                    destination: SecondCategoryView(mainCategory: mainCategory),
                     label: {
-                        Text("Hello, World!")
+                        CategoryRow(imagePath: mainCategory.imagePath, name: mainCategory.name)
                     })
+            }
+            .onAppear {
+                viewModel.fetchMainCategories()
             }
             .navigationTitle("カテゴリ一覧")
             .navigationBarTitleDisplayMode(.inline)
