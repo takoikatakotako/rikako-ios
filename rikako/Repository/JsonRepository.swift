@@ -25,4 +25,12 @@ struct JsonRepository {
             .tryMap { try JSONDecoder().decode(Category.self, from: $0.data) }
             .eraseToAnyPublisher()
     }
+    
+    func downloadImage(imageName: String) -> AnyPublisher<Data, Error> {
+        let url = URL(string: "https://rikako.jp/resource/images/\(imageName)")!
+        return URLSession.shared
+            .dataTaskPublisher(for: url)
+            .tryMap { $0.data }
+            .eraseToAnyPublisher()
+    }
 }

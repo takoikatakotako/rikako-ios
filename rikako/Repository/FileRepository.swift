@@ -4,7 +4,12 @@ struct FileRepository {
 
     func saveCategoryFile(category: Category) throws {
         let data = try JSONEncoder().encode(category)
-        let fileUrl = try getDocumentsDirectoryUrl().appendingPathComponent(category.fileName)
+        let fileUrl = try getDocumentsDirectoryUrl().appendingPathComponent("categories", isDirectory: true).appendingPathComponent(category.fileName)
+        try data.write(to: fileUrl, options: .atomic)
+    }
+    
+    func saveImageFile(name: String, data: Data) throws {
+        let fileUrl = try getDocumentsDirectoryUrl().appendingPathComponent("images", isDirectory: true).appendingPathComponent(name)
         try data.write(to: fileUrl, options: .atomic)
     }
     
