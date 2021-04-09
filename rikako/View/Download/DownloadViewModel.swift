@@ -3,6 +3,7 @@ import Combine
 
 class DownloadViewModel: ObservableObject {
     let jsonRepository = JsonRepository()
+    let fileRepository = FileRepository()
     var subscriptions = Set<AnyCancellable>()
 
     func download(categoryId: Int) {
@@ -24,7 +25,25 @@ class DownloadViewModel: ObservableObject {
     }
     
     func downloadCategory(category: Category) {
-        // 保存する
-        print(category)
+        var images: [String] = []
+        for question in category.questions {
+            for image in question.images {
+                images.append(image)
+            }
+        }
+        
+        
+        
+        print(images)
+        
+//
+//        let images = category.questions.map({$0.images.})
+//
+        do {
+            try fileRepository.saveCategoryFile(category: category)
+            
+        } catch {
+            
+        }
     }
 }

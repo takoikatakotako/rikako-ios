@@ -1,6 +1,6 @@
 import Foundation
 
-struct Question: Identifiable, Decodable {
+struct Question: Identifiable, Codable, Equatable {
     var id: Int {
         return questionId
     }
