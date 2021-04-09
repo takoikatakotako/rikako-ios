@@ -1,8 +1,5 @@
 import Foundation
 
-import Foundation
-
-
 struct SubCategoriesResponse: Decodable {
     let categories: [SubCategory]
 }

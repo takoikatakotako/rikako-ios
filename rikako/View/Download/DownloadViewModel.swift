@@ -1,13 +1,12 @@
 import SwiftUI
 import Combine
 
-class FirstCategoryViewModel: ObservableObject {
-    private let jsonRepository = JsonRepository()
+class DownloadViewModel: ObservableObject {
+    let jsonRepository = JsonRepository()
     var subscriptions = Set<AnyCancellable>()
-    @Published var mainCategories: [MainCategory] = []
-    
-    func fetchMainCategories() {
-        jsonRepository.fetchMainCategory()
+
+    func download(categoryId: Int) {
+        jsonRepository.fetchCategory(categoryId: categoryId)
         .sink(receiveCompletion: { completion in
             switch completion {
             case .finished:
@@ -18,12 +17,14 @@ class FirstCategoryViewModel: ObservableObject {
                 // self.errorMessage = error.localizedDescription
                 break
             }
-        }, receiveValue: { mainCategories in
-            DispatchQueue.main.async {
-                self.mainCategories = mainCategories
-            }
+        }, receiveValue: { category in
+            self.downloadCategory(category: category)
         })
         .store(in: &self.subscriptions)
-        
+    }
+    
+    func downloadCategory(category: Category) {
+        // 保存する
+        print(category)
     }
 }

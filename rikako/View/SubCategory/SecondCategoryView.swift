@@ -26,8 +26,8 @@ struct SecondCategoryView: View {
                     secondaryButton: .cancel())
             }
         }
-        .fullScreenCover(item: $viewModel.fullScreen) {_ in 
-            Text("ss")
+        .fullScreenCover(item: $viewModel.fullScreen) { item in
+            DownloadView(categoryId: item.categoryId)
         }
         .navigationTitle(mainCategory.name)
         .navigationBarTitleDisplayMode(.inline)

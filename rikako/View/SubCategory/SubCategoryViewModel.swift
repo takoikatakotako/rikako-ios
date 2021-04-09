@@ -14,6 +14,10 @@ enum SubCategoryViewAlert: Identifiable {
 enum SubCategoryViewFullScreen: Identifiable {
     case download(Int)
     var id: Int {
+        categoryId
+    }
+    
+    var categoryId: Int {
         switch self {
         case let .download(categoryId):
             return categoryId
@@ -41,7 +45,9 @@ class SubCategoryViewModel: ObservableObject {
                 break
             }
         }, receiveValue: { subCategories in
-            self.subCategories = subCategories
+            DispatchQueue.main.async {
+                self.subCategories = subCategories
+            }
         })
         .store(in: &self.subscriptions)
     }
