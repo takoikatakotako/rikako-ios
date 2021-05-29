@@ -44,14 +44,13 @@ targets:
     platform: iOS
     deploymentTarget: "14.0"
     sources:
-      - path: Rikako
-      - path: Config/Local
+      - path: rikako
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: jp.rikako.local
         CODE_SIGN_STYLE: Automatic
         DEVELOPMENT_TEAM: 5RH346BQ66
-        INFOPLIST_FILE: Config/Local/Info.plist
+        INFOPLIST_FILE: rikako/Info.plist
         MARKETING_VERSION: 3.0.0
         CURRENT_PROJECT_VERSION: 1
         TARGETED_DEVICE_FAMILY: 1
@@ -82,14 +81,13 @@ targets:
     platform: iOS
     deploymentTarget: "14.0"
     sources:
-      - path: Rikako
-      - path: Config/Staging
+      - path: rikako
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: jp.rikako.staging
         CODE_SIGN_STYLE: Automatic
         DEVELOPMENT_TEAM: 5RH346BQ66
-        INFOPLIST_FILE: Config/Staging/Info.plist
+        INFOPLIST_FILE: rikako/Info.plist
         MARKETING_VERSION: 3.0.0
         CURRENT_PROJECT_VERSION: 1
         TARGETED_DEVICE_FAMILY: 1
@@ -118,8 +116,7 @@ targets:
     platform: iOS
     deploymentTarget: "14.0"
     sources:
-      - path: Rikako
-      - path: Config/Production
+      - path: rikako
     dependencies:
       - package: R.swift.Library
         product: Rswift
@@ -135,7 +132,7 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: jp.rikako
         CODE_SIGN_STYLE: Automatic
         DEVELOPMENT_TEAM: 5RH346BQ66
-        INFOPLIST_FILE: Config/Production/Info.plist
+        INFOPLIST_FILE: rikako/Info.plist
         MARKETING_VERSION: 3.0.0
         CURRENT_PROJECT_VERSION: 1
         TARGETED_DEVICE_FAMILY: 1
