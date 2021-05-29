@@ -7,7 +7,7 @@ struct DownloadView: View {
     
     var body: some View {
         VStack {
-            Text("sss")
+            Text("ダウンロード中")
             
             Button {
                 print("xxxx")
