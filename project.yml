@@ -10,7 +10,7 @@ packages:
     from: 5.2.2
   SDWebImageSwiftUI:
     url: https://github.com/SDWebImage/SDWebImageSwiftUI.git
-    from: 1.3.3
+    from: 2.0.2
 schemes:
   Local:
     build:
@@ -101,6 +101,11 @@ targets:
           GAD_APPLICATION_IDENTIFER: ca-app-pub-3940256099942544~1458002511
           ADMOB_ALARM_LIST: ca-app-pub-3940256099942544/2934735716
           ADMOB_CONFIG: ca-app-pub-3940256099942544/2934735716
+      dependencies:
+      - package: R.swift.Library
+        product: Rswift
+      - package: SDWebImageSwiftUI
+        product: SDWebImageSwiftUI
     dependencies:
       - package: R.swift.Library
         product: Rswift
@@ -129,7 +134,7 @@ targets:
           - $SRCROOT/rikako/Generated/R.generated.swift
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: jp.rikako
+        PRODUCT_BUNDLE_IDENTIFIER: jp.conol.chemist
         CODE_SIGN_STYLE: Automatic
         DEVELOPMENT_TEAM: 5RH346BQ66
         INFOPLIST_FILE: rikako/Info.plist
@@ -146,6 +151,11 @@ targets:
           GAD_APPLICATION_IDENTIFER: ca-app-pub-5587141252700968~9053558907
           ADMOB_ALARM_LIST: ca-app-pub-5587141252700968/8220227024
           ADMOB_CONFIG: ca-app-pub-5587141252700968/1355204268
+    dependencies:
+      - package: R.swift.Library
+        product: Rswift
+      - package: SDWebImageSwiftUI
+        product: SDWebImageSwiftUI
   RikakoTests:
     type: bundle.unit-test
     platform: iOS
