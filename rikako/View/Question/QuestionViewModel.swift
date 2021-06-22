@@ -8,6 +8,7 @@ class QuestionViewModel: ObservableObject {
     @Published var buttonDisabled: Bool = false
     @Published var results: [Bool] = []
     @Published var goReultView = false
+    @Published var showingAlert = false
     
     init(questions: [Question]) {
         self.questions = questions
@@ -49,5 +50,10 @@ class QuestionViewModel: ObservableObject {
                 self.goReultView = true
             }
         }
+    }
+    
+    
+    func showCloaseConfirmAlert() {
+        showingAlert = true
     }
 }

@@ -3,7 +3,7 @@ import SwiftUI
 struct QuestionView: View {
     @StateObject var viewModel: QuestionViewModel
     @Binding var showingSheet: Bool
-
+    
     init(questinos: [Question], showingSheet: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: QuestionViewModel(questions: questinos))
         self._showingSheet = showingSheet
@@ -28,7 +28,7 @@ struct QuestionView: View {
                     
                     VStack {
                         Spacer()
-                        HStack {
+                        HStack(spacing: 0) {
                             Spacer()
                             Button(action: {
                                 viewModel.showingModal = true
@@ -41,7 +41,20 @@ struct QuestionView: View {
                                     .background(Color("correctPink"))
                                     .cornerRadius(4)
                             })
-                            .padding(.horizontal, 8)
+                            .padding(.trailing, 8)
+                            
+                            Button(action: {
+                                viewModel.showingModal = true
+                            }, label: {
+                                Text("答えを見る")
+                                    .foregroundColor(Color.white)
+                                    .font(Font.system(size: 16).bold())
+                                    .padding(.horizontal, 16)
+                                    .padding(.vertical, 8)
+                                    .background(Color("correctPink"))
+                                    .cornerRadius(4)
+                            })
+                            .padding(.trailing, 8)
                         }
                         
                         HStack {
@@ -62,7 +75,7 @@ struct QuestionView: View {
                     }
                     .disabled(viewModel.buttonDisabled)
                 }
-
+                
                 Text("Admob")
                     .foregroundColor(Color.white)
                     .frame(minWidth: 0, maxWidth: .infinity)
@@ -88,10 +101,25 @@ struct QuestionView: View {
                 })
         }
         .sheet(isPresented: $viewModel.showingModal) {
-            QuestionDetailView(text: "ssssssssss")
+            NavigationView {
+                QuestionDetailView(question: viewModel.question)
+            }
+        }
+        .alert(isPresented: $viewModel.showingAlert) {
+            Alert(title: Text("タイトル"),
+                  message: Text("詳細メッセージです"),
+                  primaryButton: .cancel(Text("キャンセル")),
+                  secondaryButton: .default(Text("閉じる"), action: {
+                    showingSheet = false
+                  }))
         }
         .navigationBarTitle("問題")
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarItems(leading: Button(action: {
+            viewModel.showCloaseConfirmAlert()
+        }, label: {
+            Text("Button")
+        }))
     }
 }
 
@@ -101,10 +129,12 @@ struct QuestionView_Previews: PreviewProvider {
         @State var showingSheet = false
         var body: some View {
             QuestionView(questinos: [Question.mock()], showingSheet: $showingSheet)
-
+            
         }
     }
     static var previews: some View {
-        PreviewWrapper()
+        NavigationView {
+            PreviewWrapper()
+        }
     }
 }
