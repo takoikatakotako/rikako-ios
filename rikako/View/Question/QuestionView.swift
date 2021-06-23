@@ -106,10 +106,10 @@ struct QuestionView: View {
             }
         }
         .alert(isPresented: $viewModel.showingAlert) {
-            Alert(title: Text("タイトル"),
-                  message: Text("詳細メッセージです"),
+            Alert(title: Text(""),
+                  message: Text("問題の途中ですがホーム画面に戻りますか？"),
                   primaryButton: .cancel(Text("キャンセル")),
-                  secondaryButton: .default(Text("閉じる"), action: {
+                  secondaryButton: .default(Text("はい"), action: {
                     showingSheet = false
                   }))
         }

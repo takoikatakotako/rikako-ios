@@ -7,6 +7,7 @@ struct JsonRepository {
         return URLSession.shared
             .dataTaskPublisher(for: url)
             .tryMap { try JSONDecoder().decode([MainCategory].self, from: $0.data) }
+            .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
     
@@ -15,6 +16,7 @@ struct JsonRepository {
         return URLSession.shared
             .dataTaskPublisher(for: url)
             .tryMap { try JSONDecoder().decode(SubCategoriesResponse.self, from: $0.data).categories }
+            .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
     
@@ -23,6 +25,7 @@ struct JsonRepository {
         return URLSession.shared
             .dataTaskPublisher(for: url)
             .tryMap { try JSONDecoder().decode(Category.self, from: $0.data) }
+            .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
     
@@ -31,6 +34,7 @@ struct JsonRepository {
         return URLSession.shared
             .dataTaskPublisher(for: url)
             .tryMap { $0.data }
+            .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
 }

@@ -28,6 +28,7 @@ struct SecondCategoryView: View {
         }
         .fullScreenCover(item: $viewModel.fullScreen) { item in
             DownloadView(categoryId: item.categoryId)
+                .animation(.none)
         }
         .navigationTitle(mainCategory.name)
         .navigationBarTitleDisplayMode(.inline)

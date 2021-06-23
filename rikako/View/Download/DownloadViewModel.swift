@@ -6,44 +6,61 @@ class DownloadViewModel: ObservableObject {
     let fileRepository = FileRepository()
     var subscriptions = Set<AnyCancellable>()
     private var imageCounter = 0
+
+
+    @Published var showingAlert: Bool = false
+    @Published var errorMessage: String = ""
     
     func download(categoryId: Int) {
         jsonRepository.fetchCategory(categoryId: categoryId)
-        .sink(receiveCompletion: { completion in
-            switch completion {
-            case .finished:
-                break
-            case let .failure(error):
-                print(error)
-                // self.showingAlert = true
-                // self.errorMessage = error.localizedDescription
-                break
-            }
-        }, receiveValue: { category in
-            self.downloadCategory(category: category)
-        })
-        .store(in: &self.subscriptions)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    break
+                case let .failure(error):
+                    print(error)
+                     self.showingAlert = true
+                     self.errorMessage = error.localizedDescription
+                    break
+                }
+            }, receiveValue: { category in
+                self.saveFiles(category: category)
+            })
+            .store(in: &self.subscriptions)
     }
     
-    func downloadCategory(category: Category) {
+    private func saveFiles(category: Category) {
         do {
-            // TODO: 本当は画像を保存した後にした方が良さそう
+            
+             try fileRepository.createDirectories()
+            // カテゴリファイルを保存
             try fileRepository.saveCategoryFile(category: category)
+            
+            // 問題ファイルを保存
+            for question in category.questions {
+                try fileRepository.saveQuestionFile(question: question)
+            }
+            
+            // 画像ファイルを保存
             var images: [String] = []
             for question in category.questions {
                 for image in question.images {
                     images.append(image)
                 }
             }
+            if images.isEmpty {
+                downloadComplate()
+                return
+            }
+            
             imageCounter = images.count
             downloadImages(images: images)
         } catch {
-            
+            print(error)
         }
     }
     
-    // TODO: ハンドリング
-    func downloadImages(images: [String]) {
+    private func downloadImages(images: [String]) {
         for image in images {
             jsonRepository.downloadImage(imageName: image)
                 .sink(receiveCompletion: { completion in
@@ -51,24 +68,23 @@ class DownloadViewModel: ObservableObject {
                     case .finished:
                         break
                     case let .failure(error):
-                        print(error)
-                        // self.showingAlert = true
-                        // self.errorMessage = error.localizedDescription
+                         self.showingAlert = true
+                         self.errorMessage = error.localizedDescription
                         break
                     }
                 }, receiveValue: { data in
-                    self.saveImage(image: image, imageData: data)
+                    try? self.fileRepository.saveImageFile(name: image, data: data)
                     self.imageCounter -= 1
                     if self.imageCounter == 0 {
-                        
+                        self.downloadComplate()
                     }
                 })
                 .store(in: &self.subscriptions)
         }
     }
     
-    //
-    func saveImage(image: String, imageData: Data) {
-        try? fileRepository.saveImageFile(name: image, data: imageData)
+
+    private func downloadComplate() {
+        
     }
 }

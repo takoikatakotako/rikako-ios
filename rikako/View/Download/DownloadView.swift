@@ -17,9 +17,12 @@ struct DownloadView: View {
             }
         }
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-        .background(Color.red.edgesIgnoringSafeArea(.all))
+        .background(Color.gray.edgesIgnoringSafeArea(.all))
         .onAppear {
             viewModel.download(categoryId: categoryId)
+        }
+        .alert(isPresented: $viewModel.showingAlert) {
+            Alert(title: Text("タイトル"))
         }
     }
 }
