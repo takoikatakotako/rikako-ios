@@ -3,9 +3,10 @@ import Combine
 
 class FirstCategoryViewModel: ObservableObject {
     private let jsonRepository = JsonRepository()
+    
     var subscriptions = Set<AnyCancellable>()
     @Published var mainCategories: [MainCategory] = []
-    
+
     func fetchMainCategories() {
         jsonRepository.fetchMainCategory()
         .sink(receiveCompletion: { completion in
@@ -24,6 +25,5 @@ class FirstCategoryViewModel: ObservableObject {
             }
         })
         .store(in: &self.subscriptions)
-        
     }
 }

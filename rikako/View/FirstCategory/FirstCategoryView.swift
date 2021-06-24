@@ -8,8 +8,11 @@ struct FirstCategoryView: View {
             List(viewModel.mainCategories) { mainCategory in
                 NavigationLink(
                     destination: SecondCategoryView(mainCategory: mainCategory),
-                    label: {
-                        CategoryRow(imagePath: mainCategory.imagePath, name: mainCategory.name)
+                    label: {                        
+                        CategoryRow(
+                            imagePath: mainCategory.imagePath,
+                            name: mainCategory.name, check: false
+                        )
                     })
             }
             .onAppear {

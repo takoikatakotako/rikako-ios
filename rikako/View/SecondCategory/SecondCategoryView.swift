@@ -2,13 +2,17 @@ import SwiftUI
 
 struct SecondCategoryView: View {
     let mainCategory: MainCategory
-    @StateObject var viewModel = SubCategoryViewModel()
+    @StateObject var viewModel = SecondCategoryViewModel()
     var body: some View {
         List(viewModel.subCategories) { subCategory in
             Button(action: {
                 viewModel.categoryTapped(subCategory: subCategory)
             }, label: {
-                CategoryRow(imagePath: subCategory.imagePath, name: subCategory.name)
+                if let categoryId = viewModel.selectedCategoryId {
+                    CategoryRow(imagePath: subCategory.imagePath, name: subCategory.name, check: categoryId == subCategory.categoryId)
+                } else {
+                    CategoryRow(imagePath: subCategory.imagePath, name: subCategory.name, check: false)
+                }
             })
         }
         .onAppear {

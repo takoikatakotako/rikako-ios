@@ -2,16 +2,20 @@ import SwiftUI
 import Combine
 
 class DownloadViewModel: ObservableObject {
+    let categoryId: Int
     let jsonRepository = JsonRepository()
     let fileRepository = FileRepository()
     var subscriptions = Set<AnyCancellable>()
     private var imageCounter = 0
 
-
-    @Published var showingAlert: Bool = false
-    @Published var errorMessage: String = ""
+    @Published var message: String = "リソースをダウンロードしています"
+    @Published var doneDownload: Bool = false
     
-    func download(categoryId: Int) {
+    init(categoryId: Int) {
+        self.categoryId = categoryId
+    }
+
+    func download() {
         jsonRepository.fetchCategory(categoryId: categoryId)
             .sink(receiveCompletion: { completion in
                 switch completion {
@@ -19,8 +23,8 @@ class DownloadViewModel: ObservableObject {
                     break
                 case let .failure(error):
                     print(error)
-                     self.showingAlert = true
-                     self.errorMessage = error.localizedDescription
+                    self.message = error.localizedDescription
+                    self.doneDownload = true
                     break
                 }
             }, receiveValue: { category in
@@ -32,7 +36,7 @@ class DownloadViewModel: ObservableObject {
     private func saveFiles(category: Category) {
         do {
             
-             try fileRepository.createDirectories()
+             try fileRepository.initialize()
             // カテゴリファイルを保存
             try fileRepository.saveCategoryFile(category: category)
             
@@ -56,7 +60,8 @@ class DownloadViewModel: ObservableObject {
             imageCounter = images.count
             downloadImages(images: images)
         } catch {
-            print(error)
+            self.message = error.localizedDescription
+            self.doneDownload = true
         }
     }
     
@@ -68,8 +73,8 @@ class DownloadViewModel: ObservableObject {
                     case .finished:
                         break
                     case let .failure(error):
-                         self.showingAlert = true
-                         self.errorMessage = error.localizedDescription
+                        self.message = error.localizedDescription
+                        self.doneDownload = true
                         break
                     }
                 }, receiveValue: { data in
@@ -86,5 +91,17 @@ class DownloadViewModel: ObservableObject {
 
     private func downloadComplate() {
         
+        do {
+            var config = try fileRepository.readConfigFile()
+            config.categoryId = categoryId
+            try fileRepository.saveConfigFile(config: config)
+        } catch {
+            self.message = error.localizedDescription
+            self.doneDownload = true
+            return
+        }
+        
+        self.message = "ダウンロード無事完了！"
+        self.doneDownload = true
     }
 }

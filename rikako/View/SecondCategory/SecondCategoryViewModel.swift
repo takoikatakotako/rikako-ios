@@ -25,12 +25,18 @@ enum SubCategoryViewFullScreen: Identifiable {
     }
 }
 
-class SubCategoryViewModel: ObservableObject {
+class SecondCategoryViewModel: ObservableObject {
     private let jsonRepository = JsonRepository()
     var subscriptions = Set<AnyCancellable>()
     @Published var subCategories: [SubCategory] = []
     @Published var alert: SubCategoryViewAlert?
     @Published var fullScreen: SubCategoryViewFullScreen?
+    @Published var selectedCategoryId: Int?
+    
+    init() {
+        selectedCategoryId = try? FileRepository().readConfigFile().categoryId
+    }
+    
     
     func fetchSubCategories(fileName: String) {
         jsonRepository.fetchSubCategories(fileName: fileName)

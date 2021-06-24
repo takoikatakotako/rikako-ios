@@ -2,27 +2,29 @@ import SwiftUI
 
 struct DownloadView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    let categoryId: Int
-    @StateObject var viewModel = DownloadViewModel()
+    @StateObject var viewModel: DownloadViewModel
+    
+    init(categoryId: Int) {
+        _viewModel = StateObject(wrappedValue: DownloadViewModel(categoryId: categoryId))
+    }
     
     var body: some View {
         VStack {
-            Text("ダウンロード中")
+            Text(viewModel.message)
             
-            Button {
-                print("xxxx")
-                presentationMode.wrappedValue.dismiss()
-            } label: {
-                Text("閉じる")
+            if viewModel.doneDownload {
+                Button {
+                    print("xxxx")
+                    presentationMode.wrappedValue.dismiss()
+                } label: {
+                    Text("閉じる")
+                }
             }
         }
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
         .background(Color.gray.edgesIgnoringSafeArea(.all))
         .onAppear {
-            viewModel.download(categoryId: categoryId)
-        }
-        .alert(isPresented: $viewModel.showingAlert) {
-            Alert(title: Text("タイトル"))
+            viewModel.download()
         }
     }
 }
