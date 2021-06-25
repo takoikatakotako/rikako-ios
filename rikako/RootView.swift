@@ -3,7 +3,7 @@ import SwiftUI
 struct RootView: View {
     let fileRepository = FileRepository()
     var body: some View {
-        HomeView()
+        TopView()
             .onAppear {
                 try! fileRepository.initialize()
             }
