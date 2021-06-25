@@ -3,7 +3,7 @@ import SwiftUI
 struct ResultView: View {
     let questions: [Question]
     let results: [Bool]
-    @Binding var showingSheet: TopViewFullScreenCover?
+    @Binding var showingSheet: HomeViewFullScreenCover?
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -42,7 +42,7 @@ struct ResultView: View {
 
 struct ResultView_Previews: PreviewProvider {
     struct PreviewWrapper: View {
-        @State var showingSheet: TopViewFullScreenCover? = .study
+        @State var showingSheet: HomeViewFullScreenCover? = .study
         var body: some View {
             ResultView(
                 questions: [Question.mock(questionId: 1), Question.mock(questionId: 2), Question.mock(questionId: 3)],

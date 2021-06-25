@@ -1,7 +1,7 @@
 import SwiftUI
 import Combine
 
-enum TopViewFullScreenCover: Identifiable {
+enum HomeViewFullScreenCover: Identifiable {
     case study
     case review
     var id: Int {
@@ -14,7 +14,7 @@ enum TopViewFullScreenCover: Identifiable {
     }
 }
 
-enum TopViewAlert: Identifiable {
+enum HomeViewAlert: Identifiable {
     case message(UUID, String)
     var id: UUID {
         switch self {
@@ -24,9 +24,9 @@ enum TopViewAlert: Identifiable {
     }
 }
 
-class TopViewModel: ObservableObject {
-    @Published var sheet: TopViewFullScreenCover? = nil
-    @Published var alert: TopViewAlert? = nil
+class HomeViewModel: ObservableObject {
+    @Published var sheet: HomeViewFullScreenCover? = nil
+    @Published var alert: HomeViewAlert? = nil
     @Published var categoryName: String = ""
     @Published var progressText: String = ""
 

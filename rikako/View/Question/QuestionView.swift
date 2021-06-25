@@ -2,9 +2,9 @@ import SwiftUI
 
 struct QuestionView: View {
     @StateObject var viewModel: QuestionViewModel
-    @Binding var showingSheet: TopViewFullScreenCover?
+    @Binding var showingSheet: HomeViewFullScreenCover?
     
-    init(questinos: [Question], showingSheet: Binding<TopViewFullScreenCover?>) {
+    init(questinos: [Question], showingSheet: Binding<HomeViewFullScreenCover?>) {
         _viewModel = StateObject(wrappedValue: QuestionViewModel(questions: questinos))
         self._showingSheet = showingSheet
     }
@@ -126,7 +126,7 @@ struct QuestionView: View {
 struct QuestionView_Previews: PreviewProvider {
     
     struct PreviewWrapper: View {
-        @State var showingSheet: TopViewFullScreenCover? = .study
+        @State var showingSheet: HomeViewFullScreenCover? = .study
         var body: some View {
             QuestionView(questinos: [Question.mock()], showingSheet: $showingSheet)
             
