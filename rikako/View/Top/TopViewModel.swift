@@ -27,9 +27,22 @@ enum TopViewAlert: Identifiable {
 class TopViewModel: ObservableObject {
     @Published var sheet: TopViewFullScreenCover? = nil
     @Published var alert: TopViewAlert? = nil
+    @Published var categoryName: String = ""
+    @Published var progressText: String = ""
 
     let fileRepository = FileRepository()
     let userDefaultsRepository = UserDefaultsRepository()
+    
+    func setCategoryInfo() {
+        if let categoryId = userDefaultsRepository.getCategoryId(),
+           let category = try? fileRepository.readCategoryFile(categoryId: categoryId) {
+            categoryName = category.name
+            progressText = "達成率2.3%"
+        } else {
+            categoryName = "カテゴリ未設定"
+            progressText = ""
+        }
+    }
     
     func studyButtonTapped() {
         if userDefaultsRepository.getCategoryId() == nil {

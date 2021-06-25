@@ -8,15 +8,20 @@ enum ConfigViewAlert: Identifiable {
 }
 
 class ConfigViewModel: ObservableObject {
-    @Published var questionNumber: Int = 5
-    @Published var categoryId: Int? = 4
     @Published var alert: ConfigViewAlert?
+    @Published var questionNumber: Int
+    @Published var categoryName: String
     
     let fileRepository = FileRepository()
     let userDefaultsRepository = UserDefaultsRepository()
     init() {
         questionNumber = userDefaultsRepository.getQuestionNumber()
-        categoryId = userDefaultsRepository.getCategoryId()
+        if let categoryId = userDefaultsRepository.getCategoryId(),
+           let category = try? fileRepository.readCategoryFile(categoryId: categoryId) {
+            self.categoryName = category.name
+        } else {
+            self.categoryName = "未設定"
+        }
     }
     
     func resetButtonTapped() {

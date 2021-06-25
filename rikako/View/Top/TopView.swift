@@ -17,11 +17,11 @@ struct TopView: View {
                     Image("top-rikako-standing")
                     Spacer()
                     HStack {
-                        Text("高校受験化学")
+                        Text(viewModel.categoryName)
                             .foregroundColor(Color.white)
                             .font(Font.system(size: 20).bold())
                         Spacer()
-                        Text("達成率2.3%")
+                        Text(viewModel.progressText)
                             .foregroundColor(Color.white)
                             .font(Font.system(size: 20).bold())
                     }
@@ -56,6 +56,9 @@ struct TopView: View {
                     .padding(.horizontal, 8)
                     .padding(.bottom, 8)
                 }
+            }
+            .onAppear {
+                viewModel.setCategoryInfo()
             }
             .tabItem {
                 Image(systemName: "1.square.fill")

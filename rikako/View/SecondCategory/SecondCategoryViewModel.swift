@@ -65,4 +65,8 @@ class SecondCategoryViewModel: ObservableObject {
     func downloadCategory(categoryId: Int) {
         fullScreen = .download(categoryId)
     }
+    
+    func updateSelectedCategoryId() {
+        selectedCategoryId = userDefaultsRepository.getCategoryId()
+    }
 }

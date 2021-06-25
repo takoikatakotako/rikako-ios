@@ -30,7 +30,12 @@ struct SecondCategoryView: View {
                     secondaryButton: .cancel())
             }
         }
-        .fullScreenCover(item: $viewModel.fullScreen) { item in
+
+        .fullScreenCover(
+            item: $viewModel.fullScreen,
+            onDismiss: {
+                viewModel.updateSelectedCategoryId()
+        }){ item in
             DownloadView(categoryId: item.categoryId)
                 .animation(.none)
         }

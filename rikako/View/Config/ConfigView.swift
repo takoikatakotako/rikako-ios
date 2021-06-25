@@ -22,11 +22,7 @@ struct ConfigView: View {
                         HStack {
                             Text("カテゴリ")
                             Spacer()
-                            if let categoryId = viewModel.categoryId {
-                                Text("\(categoryId)")
-                            } else {
-                                Text("未設定")
-                            }
+                            Text("\(viewModel.categoryName)")
                         }
                     }
                 }
