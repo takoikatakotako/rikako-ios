@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ConfigView: View {
     @StateObject var viewModel = ConfigViewModel()
+    @Binding var tabSelection: Int
     var body: some View {
         NavigationView {
             List {
@@ -17,7 +18,8 @@ struct ConfigView: View {
                     }
                     
                     Button {
-                        
+                        // カテゴリに移動する
+                        tabSelection = 1
                     } label: {
                         HStack {
                             Text("カテゴリ")
@@ -90,7 +92,36 @@ struct ConfigView: View {
 }
 
 struct ConfigView_Previews: PreviewProvider {
+    struct PreviewWrapper: View {
+        @State var tabSelection: Int = 0
+        var body: some View {
+            TabView {
+                HomeView()
+                    .tabItem {
+                        Image(systemName: "house")
+                            .renderingMode(.template)
+                        Text("ホーム")
+                    }
+                    .tag(0)
+                FirstCategoryView()
+                    .tabItem {
+                        Image(systemName: "books.vertical")
+                            .renderingMode(.template)
+                        Text("カテゴリ")
+                    }
+                    .tag(1)
+                ConfigView(tabSelection: $tabSelection)
+                    .tabItem {
+                        Image(systemName: "gearshape")
+                            .renderingMode(.template)
+                        Text("設定")
+                    }
+                    .tag(2)
+            }
+        }
+    }
+    
     static var previews: some View {
-        ConfigView()
+        PreviewWrapper()
     }
 }

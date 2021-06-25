@@ -118,7 +118,9 @@ struct QuestionView: View {
         .navigationBarItems(leading: Button(action: {
             viewModel.showCloaseConfirmAlert()
         }, label: {
-            Text("Button")
+            Image(systemName: "house")
+                .renderingMode(.template)
+                .foregroundColor(.black)
         }))
     }
 }
