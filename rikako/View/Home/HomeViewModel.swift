@@ -35,7 +35,7 @@ class HomeViewModel: ObservableObject {
     
     func setCategoryInfo() {
         if let categoryId = userDefaultsRepository.getCategoryId(),
-           let category = try? fileRepository.readCategoryFile(categoryId: categoryId) {
+           let category = try? fileRepository.getCategoryFile(categoryId: categoryId) {
             categoryName = category.name
             progressText = "達成率2.3%"
         } else {
@@ -62,7 +62,7 @@ class HomeViewModel: ObservableObject {
     
     func getStudyQuestions() -> [Question] {
         guard let categoryId = userDefaultsRepository.getCategoryId(),
-              let category = try? fileRepository.readCategoryFile(categoryId: categoryId) else {
+              let category = try? fileRepository.getCategoryFile(categoryId: categoryId) else {
             return []
         }
         return Array(category.questions.shuffled().prefix(5))
@@ -70,7 +70,7 @@ class HomeViewModel: ObservableObject {
     
     func getReviewQuestions() -> [Question] {
         guard let categoryId = userDefaultsRepository.getCategoryId(),
-              let category = try? fileRepository.readCategoryFile(categoryId: categoryId) else {
+              let category = try? fileRepository.getCategoryFile(categoryId: categoryId) else {
             return []
         }
         return Array(category.questions.shuffled().prefix(5))

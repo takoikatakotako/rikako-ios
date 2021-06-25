@@ -10,6 +10,8 @@ class QuestionViewModel: ObservableObject {
     @Published var goReultView = false
     @Published var showingAlert = false
     
+    let fileRepository = FileRepository()
+    
     init(questions: [Question]) {
         self.questions = questions
         self.questionIndex = 0
@@ -52,6 +54,12 @@ class QuestionViewModel: ObservableObject {
         }
     }
     
+    func getUIImage(name: String) -> UIImage? {
+        guard let imageData = try? fileRepository.getImageFile(name: name) else {
+            return nil
+        }
+        return UIImage(data: imageData)
+    }
     
     func showCloaseConfirmAlert() {
         showingAlert = true

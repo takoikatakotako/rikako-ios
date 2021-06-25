@@ -26,19 +26,36 @@ struct QuestionView: View {
                         .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                     }
                     
+                    HStack {
+                        ForEach(viewModel.question.images, id: \.self) { image in
+                            if let uiImage = viewModel.getUIImage(name: image) {
+                                Image(uiImage: uiImage)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: 90)
+                            } else {
+                                Image("tutorial-screen1")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: 90)
+                            }
+                        }
+                    }
+                    
                     VStack {
                         Spacer()
                         HStack(spacing: 0) {
                             Spacer()
+
                             Button(action: {
                                 viewModel.showingModal = true
                             }, label: {
-                                Text("答えを見る")
+                                Text("スキップ")
                                     .foregroundColor(Color.white)
                                     .font(Font.system(size: 16).bold())
                                     .padding(.horizontal, 16)
                                     .padding(.vertical, 8)
-                                    .background(Color("correctPink"))
+                                    .background(Color("incorrectBlue"))
                                     .cornerRadius(4)
                             })
                             .padding(.trailing, 8)
@@ -55,16 +72,7 @@ struct QuestionView: View {
                                     .cornerRadius(4)
                             })
                             .padding(.trailing, 8)
-                        }
-                        
-                        HStack {
-                            ForEach(viewModel.question.images, id: \.self) { image in
-                                Image("tutorial-screen1")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 90, height: 90)
-                                    .background(Color.black)
-                            }
+                            
                         }
                     }
                 }

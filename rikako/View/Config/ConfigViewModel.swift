@@ -17,7 +17,7 @@ class ConfigViewModel: ObservableObject {
     init() {
         questionNumber = userDefaultsRepository.getQuestionNumber()
         if let categoryId = userDefaultsRepository.getCategoryId(),
-           let category = try? fileRepository.readCategoryFile(categoryId: categoryId) {
+           let category = try? fileRepository.getCategoryFile(categoryId: categoryId) {
             self.categoryName = category.name
         } else {
             self.categoryName = "未設定"

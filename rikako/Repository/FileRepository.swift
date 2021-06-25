@@ -26,7 +26,7 @@ struct FileRepository {
         try data.write(to: fileUrl, options: .atomic)
     }
     
-    func readCategoryFile(categoryId: Int) throws -> Category {
+    func getCategoryFile(categoryId: Int) throws -> Category {
         let fileUrl = try getDocumentsDirectoryUrl().appendingPathComponent(categoriesDirectoryName, isDirectory: true).appendingPathComponent("\(categoryId).json")
         let data = try Data(contentsOf: fileUrl)
         let category = try JSONDecoder().decode(Category.self, from: data)
@@ -42,6 +42,12 @@ struct FileRepository {
     func saveImageFile(name: String, data: Data) throws {
         let fileUrl = try getDocumentsDirectoryUrl().appendingPathComponent(imagesDirectoryName, isDirectory: true).appendingPathComponent(name)
         try data.write(to: fileUrl, options: .atomic)
+    }
+    
+    func getImageFile(name: String) throws -> Data {
+        let fileUrl = try getDocumentsDirectoryUrl().appendingPathComponent(imagesDirectoryName, isDirectory: true).appendingPathComponent(name)
+        let data = try Data(contentsOf: fileUrl)
+        return data
     }
     
     private func getDocumentsDirectoryUrl() throws -> URL {
