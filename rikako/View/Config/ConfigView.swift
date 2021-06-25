@@ -1,30 +1,71 @@
 import SwiftUI
 
 struct ConfigView: View {
+    @StateObject var viewModel = ConfigViewModel()
     var body: some View {
         NavigationView {
             List {
                 Section(header: SectionHeader(text: "問題設定")) {
-                    Text("問題数")
-                    Text("カテゴリ")
+                    Button {
+                        
+                    } label: {
+                        HStack {
+                            Text("問題数")
+                            Spacer()
+                            Text("\(viewModel.questionNumber)")
+                        }
+                    }
+                    
+                    Button {
+                        
+                    } label: {
+                        Text("カテゴリ")
+                    }
                 }
                 
                 Section(header: SectionHeader(text: "チュートリアル")) {
-                    Text("使い方")
+                    Button {
+                        
+                    } label: {
+                        Text("使い方")
+                    }
                 }
                 
                 Section(header: SectionHeader(text: "サウンド")) {
-                    Text("効果音")
-                    Text("バイブ設定")
+                    Button {
+                        
+                    } label: {
+                        Text("効果音")
+                    }
+                    
+                    Button {
+                        
+                    } label: {
+                        Text("バイブ設定")
+                    }
                 }
                 
                 Section(header: SectionHeader(text: "その他")) {
-                    Text("レビューする")
-                    Text("理科子さんのTwitter")
+                    
+                    Button {
+                        
+                    } label: {
+                        Text("レビューする")
+                    }
+                    
+                    Button {
+                        
+                    } label: {
+                        Text("理科子さんのTwitter")
+                    }
                 }
                 
                 Section(header: SectionHeader(text: "")) {
-                    Text("リセット")
+                    Button {
+                        
+                    } label: {
+                        Text("リセット")
+                    }
                 }
             }
             .navigationTitle("設定")

@@ -1,8 +1,12 @@
 import SwiftUI
 
 struct RootView: View {
+    let fileRepository = FileRepository()
     var body: some View {
         TopView()
+            .onAppear {
+                try! fileRepository.initialize()
+            }
     }
 }
 

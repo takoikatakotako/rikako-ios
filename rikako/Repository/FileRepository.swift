@@ -26,7 +26,7 @@ struct FileRepository {
         
         let configFileUrl = try getDocumentsDirectoryUrl().appendingPathComponent(configDirectoryName, isDirectory: true).appendingPathComponent(Config.fileName)
         if !FileManager.default.fileExists(atPath: configFileUrl.path) {
-            let data = try JSONEncoder().encode(Config())
+            let data = try JSONEncoder().encode(Config(questionNumber: 5))
             try data.write(to: configFileUrl, options: .atomic)
         }
     }
@@ -35,6 +35,13 @@ struct FileRepository {
         let data = try JSONEncoder().encode(category)
         let fileUrl = try getDocumentsDirectoryUrl().appendingPathComponent(categoriesDirectoryName, isDirectory: true).appendingPathComponent(category.fileName)
         try data.write(to: fileUrl, options: .atomic)
+    }
+    
+    func readCategoryFile(categoryId: Int) throws -> Category {
+        let fileUrl = try getDocumentsDirectoryUrl().appendingPathComponent(categoriesDirectoryName, isDirectory: true).appendingPathComponent("\(categoryId).json")
+        let data = try Data(contentsOf: fileUrl)
+        let category = try JSONDecoder().decode(Category.self, from: data)
+        return category
     }
     
     func saveQuestionFile(question: Question) throws {

@@ -2,9 +2,9 @@ import SwiftUI
 
 struct QuestionView: View {
     @StateObject var viewModel: QuestionViewModel
-    @Binding var showingSheet: Bool
+    @Binding var showingSheet: TopViewFullScreenCover?
     
-    init(questinos: [Question], showingSheet: Binding<Bool>) {
+    init(questinos: [Question], showingSheet: Binding<TopViewFullScreenCover?>) {
         _viewModel = StateObject(wrappedValue: QuestionViewModel(questions: questinos))
         self._showingSheet = showingSheet
     }
@@ -110,7 +110,7 @@ struct QuestionView: View {
                   message: Text("問題の途中ですがホーム画面に戻りますか？"),
                   primaryButton: .cancel(Text("キャンセル")),
                   secondaryButton: .default(Text("はい"), action: {
-                    showingSheet = false
+                    showingSheet = nil
                   }))
         }
         .navigationBarTitle("問題")
@@ -126,7 +126,7 @@ struct QuestionView: View {
 struct QuestionView_Previews: PreviewProvider {
     
     struct PreviewWrapper: View {
-        @State var showingSheet = false
+        @State var showingSheet: TopViewFullScreenCover? = .study
         var body: some View {
             QuestionView(questinos: [Question.mock()], showingSheet: $showingSheet)
             

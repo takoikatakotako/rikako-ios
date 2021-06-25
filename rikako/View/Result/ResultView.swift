@@ -3,7 +3,7 @@ import SwiftUI
 struct ResultView: View {
     let questions: [Question]
     let results: [Bool]
-    @Binding var showingSheet: Bool
+    @Binding var showingSheet: TopViewFullScreenCover?
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -22,7 +22,7 @@ struct ResultView: View {
             .listStyle(PlainListStyle())
             
             Button(action: {
-                showingSheet = false
+                showingSheet = nil
             }, label: {
                 Text("トップに戻る")
                     .foregroundColor(Color.white)
@@ -42,7 +42,7 @@ struct ResultView: View {
 
 struct ResultView_Previews: PreviewProvider {
     struct PreviewWrapper: View {
-        @State var showingSheet = true
+        @State var showingSheet: TopViewFullScreenCover? = .study
         var body: some View {
             ResultView(
                 questions: [Question.mock(questionId: 1), Question.mock(questionId: 2), Question.mock(questionId: 3)],
