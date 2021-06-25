@@ -19,7 +19,15 @@ struct ConfigView: View {
                     Button {
                         
                     } label: {
-                        Text("カテゴリ")
+                        HStack {
+                            Text("カテゴリ")
+                            Spacer()
+                            if let categoryId = viewModel.categoryId {
+                                Text("\(categoryId)")
+                            } else {
+                                Text("未設定")
+                            }
+                        }
                     }
                 }
                 
@@ -62,10 +70,22 @@ struct ConfigView: View {
                 
                 Section(header: SectionHeader(text: "")) {
                     Button {
-                        
+                        viewModel.resetButtonTapped()
                     } label: {
                         Text("リセット")
                     }
+                }
+            }
+            .alert(item: $viewModel.alert) {item in
+                switch item {
+                case .reset:
+                    return Alert(
+                        title: Text("リセット"),
+                        message: Text("データをリセットしてもよろしいですか？"),
+                        primaryButton: .default(Text("リセット"), action: {
+                            viewModel.reset()
+                        }),
+                        secondaryButton: .cancel(Text("キャンセル")))
                 }
             }
             .navigationTitle("設定")

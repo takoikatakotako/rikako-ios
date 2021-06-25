@@ -89,8 +89,11 @@ struct TopView: View {
                 }
             }
         }
-        .alert(item: $viewModel.alert) {_ in 
-            Alert(title: Text("Hello"))
+        .alert(item: $viewModel.alert) {item in
+            switch item {
+            case let .message(_, message):
+                return Alert(title: Text(message))
+            }
         }
     }
 }

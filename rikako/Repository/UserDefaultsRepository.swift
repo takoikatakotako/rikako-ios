@@ -28,4 +28,9 @@ struct UserDefaultsRepository {
     func getCategoryId() -> Int? {
         return UserDefaults.standard.object(forKey: Self.CATEGORY_ID) as? Int
     }
+    
+    func reset() {
+        UserDefaults.standard.set(nil, forKey: Self.QUESTION_NUMBER)
+        UserDefaults.standard.set(nil, forKey: Self.CATEGORY_ID)
+    }
 }
