@@ -61,21 +61,21 @@ struct TopView: View {
                 viewModel.setCategoryInfo()
             }
             .tabItem {
-                Image(systemName: "1.square.fill")
+                Image(systemName: "house")
                     .renderingMode(.template)
-                Text("First")
+                Text("ホーム")
             }
             FirstCategoryView()
                 .tabItem {
-                    Image(systemName: "2.square.fill")
+                    Image(systemName: "books.vertical")
                         .renderingMode(.template)
-                    Text("Second")
+                    Text("カテゴリ")
                 }
             ConfigView()
                 .tabItem {
-                    Image(systemName: "3.square.fill")
+                    Image(systemName: "gearshape")
                         .renderingMode(.template)
-                    Text("Third")
+                    Text("設定")
                 }
         }
         .accentColor(Color("main"))

@@ -24,6 +24,14 @@ class ConfigViewModel: ObservableObject {
         }
     }
     
+    func reviewButtonTapped() {
+        
+    }
+    
+    func twitterButtonTapped() {
+        
+    }
+    
     func resetButtonTapped() {
         alert = .reset
     }

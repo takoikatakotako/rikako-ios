@@ -50,15 +50,14 @@ struct ConfigView: View {
                 }
                 
                 Section(header: SectionHeader(text: "その他")) {
-                    
                     Button {
-                        
+                        viewModel.reviewButtonTapped()
                     } label: {
                         Text("レビューする")
                     }
                     
                     Button {
-                        
+                        viewModel.twitterButtonTapped()
                     } label: {
                         Text("理科子さんのTwitter")
                     }
