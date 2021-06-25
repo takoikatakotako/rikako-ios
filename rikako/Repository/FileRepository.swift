@@ -4,7 +4,6 @@ struct FileRepository {
     let categoriesDirectoryName = "categories"
     let questionsDirectoryName = "questions"
     let imagesDirectoryName = "images"
-    let configDirectoryName = "config"
 
     func initialize() throws {
         let categoriesDirectoryUrl = try getDocumentsDirectoryUrl().appendingPathComponent(categoriesDirectoryName)
@@ -18,16 +17,6 @@ struct FileRepository {
         let imagesDirectoryUrl = try getDocumentsDirectoryUrl().appendingPathComponent(imagesDirectoryName, isDirectory: true)
         if !FileManager.default.fileExists(atPath: imagesDirectoryUrl.path) {
             try FileManager.default.createDirectory(atPath: imagesDirectoryUrl.path, withIntermediateDirectories: false, attributes: nil)
-        }
-        let configDirectoryUrl = try getDocumentsDirectoryUrl().appendingPathComponent(configDirectoryName, isDirectory: true)
-        if !FileManager.default.fileExists(atPath: configDirectoryUrl.path) {
-            try FileManager.default.createDirectory(atPath: configDirectoryUrl.path, withIntermediateDirectories: false, attributes: nil)
-        }
-        
-        let configFileUrl = try getDocumentsDirectoryUrl().appendingPathComponent(configDirectoryName, isDirectory: true).appendingPathComponent(Config.fileName)
-        if !FileManager.default.fileExists(atPath: configFileUrl.path) {
-            let data = try JSONEncoder().encode(Config(questionNumber: 5))
-            try data.write(to: configFileUrl, options: .atomic)
         }
     }
 
@@ -53,19 +42,6 @@ struct FileRepository {
     func saveImageFile(name: String, data: Data) throws {
         let fileUrl = try getDocumentsDirectoryUrl().appendingPathComponent(imagesDirectoryName, isDirectory: true).appendingPathComponent(name)
         try data.write(to: fileUrl, options: .atomic)
-    }
-    
-    func saveConfigFile(config: Config) throws {
-        let data = try JSONEncoder().encode(config)
-        let fileUrl = try getDocumentsDirectoryUrl().appendingPathComponent(configDirectoryName, isDirectory: true).appendingPathComponent(Config.fileName)
-        try data.write(to: fileUrl, options: .atomic)
-    }
-    
-    func readConfigFile() throws -> Config {
-        let fileUrl = try getDocumentsDirectoryUrl().appendingPathComponent(configDirectoryName, isDirectory: true).appendingPathComponent(Config.fileName)
-        let data = try Data(contentsOf: fileUrl)
-        let config = try JSONDecoder().decode(Config.self, from: data)
-        return config
     }
     
     private func getDocumentsDirectoryUrl() throws -> URL {

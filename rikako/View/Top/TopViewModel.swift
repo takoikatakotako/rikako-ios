@@ -14,42 +14,52 @@ enum TopViewFullScreenCover: Identifiable {
     }
 }
 
+enum TopViewAlert: Identifiable {
+    case message(UUID, String)
+    var id: UUID {
+        switch self {
+        case let .message(id, _):
+            return id
+        }
+    }
+}
+
 class TopViewModel: ObservableObject {
-    @Published var showingQuestionSheet: TopViewFullScreenCover? = nil
+    @Published var sheet: TopViewFullScreenCover? = nil
+    @Published var alert: TopViewAlert? = nil
+
     let fileRepository = FileRepository()
+    let userDefaultsRepository = UserDefaultsRepository()
     
     func studyButtonTapped() {
-        showingQuestionSheet = .study
+        if userDefaultsRepository.getCategoryId() == nil {
+            alert = .message(UUID(), "カテゴリーが選択されていません。")
+            return
+        }
+        sheet = .study
     }
     
     func reviewButtonTapped() {
-        showingQuestionSheet = .review
+        if userDefaultsRepository.getCategoryId() == nil {
+            alert = .message(UUID(), "カテゴリーが選択されていません。")
+            return
+        }
+        sheet = .review
     }
     
     func getStudyQuestions() -> [Question] {
-        do {
-            let config = try fileRepository.readConfigFile()
-            guard let categoryId = config.categoryId else {
-                throw PublicFileError.failToSaveCategory
-            }
-            let category = try fileRepository.readCategoryFile(categoryId: categoryId)
-            return Array(category.questions.shuffled().prefix(5))
-        } catch {
+        guard let categoryId = userDefaultsRepository.getCategoryId(),
+              let category = try? fileRepository.readCategoryFile(categoryId: categoryId) else {
             return []
         }
+        return Array(category.questions.shuffled().prefix(5))
     }
     
     func getReviewQuestions() -> [Question] {
-        do {
-            let config = try fileRepository.readConfigFile()
-            guard let categoryId = config.categoryId else {
-                throw PublicFileError.failToSaveCategory
-            }
-            let category = try fileRepository.readCategoryFile(categoryId: categoryId)
-            return Array(category.questions.shuffled().prefix(5))
-        } catch {
+        guard let categoryId = userDefaultsRepository.getCategoryId(),
+              let category = try? fileRepository.readCategoryFile(categoryId: categoryId) else {
             return []
         }
+        return Array(category.questions.shuffled().prefix(5))
     }
-    
 }

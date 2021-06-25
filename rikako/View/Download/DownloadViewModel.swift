@@ -5,6 +5,7 @@ class DownloadViewModel: ObservableObject {
     let categoryId: Int
     let jsonRepository = JsonRepository()
     let fileRepository = FileRepository()
+    let userDefaultsRepository = UserDefaultsRepository()
     var subscriptions = Set<AnyCancellable>()
     private var imageCounter = 0
 
@@ -88,19 +89,8 @@ class DownloadViewModel: ObservableObject {
         }
     }
     
-
     private func downloadComplate() {
-        
-        do {
-            var config = try fileRepository.readConfigFile()
-            config.categoryId = categoryId
-            try fileRepository.saveConfigFile(config: config)
-        } catch {
-            self.message = error.localizedDescription
-            self.doneDownload = true
-            return
-        }
-        
+        userDefaultsRepository.setCategoryId(categoryId: categoryId)
         self.message = "ダウンロード無事完了！"
         self.doneDownload = true
     }

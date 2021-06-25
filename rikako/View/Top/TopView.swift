@@ -77,17 +77,20 @@ struct TopView: View {
         }
         .accentColor(Color("main"))
         .background(Color.white)
-        .fullScreenCover(item: $viewModel.showingQuestionSheet) { item in
+        .fullScreenCover(item: $viewModel.sheet) { item in
             switch item {
             case .study:
                 NavigationView {
-                    QuestionView(questinos: viewModel.getStudyQuestions(), showingSheet: $viewModel.showingQuestionSheet)
+                    QuestionView(questinos: viewModel.getStudyQuestions(), showingSheet: $viewModel.sheet)
                 }
             case .review:
                 NavigationView {
-                    QuestionView(questinos: viewModel.getStudyQuestions(), showingSheet: $viewModel.showingQuestionSheet)
+                    QuestionView(questinos: viewModel.getStudyQuestions(), showingSheet: $viewModel.sheet)
                 }
             }
+        }
+        .alert(item: $viewModel.alert) {_ in 
+            Alert(title: Text("Hello"))
         }
     }
 }
