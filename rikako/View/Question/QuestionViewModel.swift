@@ -1,5 +1,6 @@
 import SwiftUI
 import AVKit
+import AudioToolbox
 
 class QuestionViewModel: ObservableObject {
     @Published var question: Question
@@ -9,13 +10,17 @@ class QuestionViewModel: ObservableObject {
     @Published var results: [Bool] = []
     @Published var goReultView = false
     @Published var showingAlert = false
-    
+    let soundOn: Bool
+    let vibOn: Bool
     let fileRepository = FileRepository()
-    
+    let userDefaultsRepository = UserDefaultsRepository()
+
     init(questions: [Question]) {
         self.questions = questions
         self.questionIndex = 0
         self.question = questions[questionIndex]
+        soundOn = userDefaultsRepository.getSoundEnable()
+        vibOn = userDefaultsRepository.getVibEnable()
     }
     
     var audioPlayer: AVAudioPlayer?
@@ -28,30 +33,30 @@ class QuestionViewModel: ObservableObject {
             // 正解
             results.append(true)
             showingResultImage = true
-            
-            let sound = NSDataAsset(name: "correct")!
-            audioPlayer = try? AVAudioPlayer(data: sound.data)
-            audioPlayer?.play()
+            sound(correct: true)
         } else {
             // 不正解
             results.append(false)
             showingResultImage = false
-            
-            let sound = NSDataAsset(name: "discorrect")!
-            audioPlayer = try? AVAudioPlayer(data: sound.data)
-            audioPlayer?.play()
+            sound(correct: false)
+            vib()
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
             self.showingResultImage = nil
-            if self.questionIndex < self.questions.count - 1 {
-                self.questionIndex += 1
-                self.question = self.questions[self.questionIndex]
-                self.buttonDisabled = false
-            } else {
-                self.goReultView = true
-            }
+            self.nextQuestion()
         }
+    }
+    
+    func skip() {
+        // 不正解
+        self.buttonDisabled = true
+        results.append(false)
+        nextQuestion()
+    }
+    
+    func showAnser() {
+        
     }
     
     func getUIImage(name: String) -> UIImage? {
@@ -63,5 +68,35 @@ class QuestionViewModel: ObservableObject {
     
     func showCloaseConfirmAlert() {
         showingAlert = true
+    }
+    
+    private func nextQuestion() {
+        if self.questionIndex < self.questions.count - 1 {
+            self.questionIndex += 1
+            self.question = self.questions[self.questionIndex]
+            self.buttonDisabled = false
+        } else {
+            self.goReultView = true
+        }
+    }
+    
+    private func sound(correct: Bool) {
+        guard soundOn else {
+            return
+        }
+        
+        let fileName = correct ? "correct" : "discorrect"
+        guard let sound = NSDataAsset(name: fileName) else {
+            return
+        }
+        audioPlayer = try? AVAudioPlayer(data: sound.data)
+        audioPlayer?.play()
+    }
+    
+    private func vib() {
+        guard vibOn else {
+            return
+        }
+        AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
     }
 }

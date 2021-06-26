@@ -32,6 +32,11 @@ class HomeViewModel: ObservableObject {
 
     let fileRepository = FileRepository()
     let userDefaultsRepository = UserDefaultsRepository()
+    var questionNumber: Int
+    
+    init() {
+        questionNumber = userDefaultsRepository.getQuestionNumber()
+    }
     
     func setCategoryInfo() {
         if let categoryId = userDefaultsRepository.getCategoryId(),
@@ -42,6 +47,7 @@ class HomeViewModel: ObservableObject {
             categoryName = "カテゴリ未設定"
             progressText = ""
         }
+        questionNumber = userDefaultsRepository.getQuestionNumber()
     }
     
     func studyButtonTapped() {
@@ -65,7 +71,7 @@ class HomeViewModel: ObservableObject {
               let category = try? fileRepository.getCategoryFile(categoryId: categoryId) else {
             return []
         }
-        return Array(category.questions.shuffled().prefix(5))
+        return Array(category.questions.shuffled().prefix(questionNumber))
     }
     
     func getReviewQuestions() -> [Question] {
@@ -73,6 +79,6 @@ class HomeViewModel: ObservableObject {
               let category = try? fileRepository.getCategoryFile(categoryId: categoryId) else {
             return []
         }
-        return Array(category.questions.shuffled().prefix(5))
+        return Array(category.questions.shuffled().prefix(questionNumber))
     }
 }

@@ -17,7 +17,15 @@ struct ResultView: View {
                         label: {
                             ResultListRow(result: results[index], text: question.text)
                         })
+                    
                 }
+                
+                // TODO: コードでもう少し厳密にする。計算する。 Scroll + LazyVStack もありかも
+                if questions.count > 5 {
+                    Text("")
+                        .padding(.bottom, 60)
+                }
+                
             }
             .listStyle(PlainListStyle())
             
@@ -33,6 +41,7 @@ struct ResultView: View {
                     .padding(.horizontal, 8)
                     .cornerRadius(16)
             })
+            .padding(.bottom, 8)
         }
         .navigationTitle("回答結果")
         .navigationBarTitleDisplayMode(.inline)

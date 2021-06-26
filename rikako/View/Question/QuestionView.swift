@@ -28,16 +28,20 @@ struct QuestionView: View {
                     
                     HStack {
                         ForEach(viewModel.question.images, id: \.self) { image in
-                            if let uiImage = viewModel.getUIImage(name: image) {
-                                Image(uiImage: uiImage)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(height: 90)
-                            } else {
-                                Image("tutorial-screen1")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(height: 90)
+                            Button {
+                                viewModel.showingModal = true
+                            } label: {
+                                if let uiImage = viewModel.getUIImage(name: image) {
+                                    Image(uiImage: uiImage)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(height: 90)
+                                } else {
+                                    Image("tutorial-screen1")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(height: 90)
+                                }
                             }
                         }
                     }
@@ -48,13 +52,12 @@ struct QuestionView: View {
                             Spacer()
 
                             Button(action: {
-                                viewModel.showingModal = true
+                                viewModel.skip()
                             }, label: {
                                 Text("スキップ")
+                                    .frame(width: 98, height: 32)
                                     .foregroundColor(Color.white)
                                     .font(Font.system(size: 16).bold())
-                                    .padding(.horizontal, 16)
-                                    .padding(.vertical, 8)
                                     .background(Color("incorrectBlue"))
                                     .cornerRadius(4)
                             })
@@ -64,10 +67,9 @@ struct QuestionView: View {
                                 viewModel.showingModal = true
                             }, label: {
                                 Text("答えを見る")
+                                    .frame(width: 98, height: 32)
                                     .foregroundColor(Color.white)
                                     .font(Font.system(size: 16).bold())
-                                    .padding(.horizontal, 16)
-                                    .padding(.vertical, 8)
                                     .background(Color("correctPink"))
                                     .cornerRadius(4)
                             })
