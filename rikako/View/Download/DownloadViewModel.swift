@@ -52,6 +52,9 @@ class DownloadViewModel: ObservableObject {
                 for image in question.images {
                     images.append(image)
                 }
+                for commentImage in question.commentImages {
+                    images.append(commentImage)
+                }
             }
             if images.isEmpty {
                 downloadComplate()

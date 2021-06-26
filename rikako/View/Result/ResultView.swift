@@ -13,7 +13,7 @@ struct ResultView: View {
                 
                 ForEach(Array(zip(questions.indices, questions)), id: \.0) { index, question in
                     NavigationLink(
-                        destination: QuestionDetailView(question: question),
+                        destination: QuestionAnswer(question: question),
                         label: {
                             ResultListRow(result: results[index], text: question.text)
                         })
