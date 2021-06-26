@@ -25,6 +25,7 @@ struct QuestionView: View {
                         }
                         .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                     }
+                    .disabled(viewModel.buttonDisabled)
                     
                     HStack {
                         ForEach(viewModel.question.images, id: \.self) { image in
@@ -43,6 +44,7 @@ struct QuestionView: View {
                                         .frame(height: 90)
                                 }
                             }
+                            .disabled(viewModel.buttonDisabled)
                         }
                     }
                     
@@ -61,6 +63,7 @@ struct QuestionView: View {
                                     .background(Color("incorrectBlue"))
                                     .cornerRadius(4)
                             })
+                            .disabled(viewModel.buttonDisabled)
                             .padding(.trailing, 8)
                             
                             Button(action: {
@@ -73,8 +76,8 @@ struct QuestionView: View {
                                     .background(Color("correctPink"))
                                     .cornerRadius(4)
                             })
+                            .disabled(viewModel.buttonDisabled)
                             .padding(.trailing, 8)
-                            
                         }
                     }
                 }
