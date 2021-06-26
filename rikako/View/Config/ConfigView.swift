@@ -8,7 +8,7 @@ struct ConfigView: View {
             List {
                 Section(header: SectionHeader(text: "問題設定")) {
                     Button {
-                        
+                        viewModel.questionNumberTapped()
                     } label: {
                         HStack {
                             Text("問題数")
@@ -38,15 +38,11 @@ struct ConfigView: View {
                 }
                 
                 Section(header: SectionHeader(text: "サウンド")) {
-                    Button {
-                        
-                    } label: {
+                    Toggle(isOn: $viewModel.soundOn) {
                         Text("効果音")
                     }
                     
-                    Button {
-                        
-                    } label: {
+                    Toggle(isOn: $viewModel.vibOn) {
                         Text("バイブ設定")
                     }
                 }
@@ -73,20 +69,31 @@ struct ConfigView: View {
                     }
                 }
             }
-            .alert(item: $viewModel.alert) {item in
-                switch item {
-                case .reset:
-                    return Alert(
-                        title: Text("リセット"),
-                        message: Text("データをリセットしてもよろしいですか？"),
-                        primaryButton: .default(Text("リセット"), action: {
-                            viewModel.reset()
-                        }),
-                        secondaryButton: .cancel(Text("キャンセル")))
-                }
-            }
             .navigationTitle("設定")
             .navigationBarTitleDisplayMode(.inline)
+        }
+        .onAppear{
+            viewModel.updateConfigs()
+        }
+        .alert(item: $viewModel.alert) {item in
+            switch item {
+            case .reset:
+                return Alert(
+                    title: Text("リセット"),
+                    message: Text("データをリセットしてもよろしいですか？"),
+                    primaryButton: .default(Text("リセット"), action: {
+                        viewModel.reset()
+                    }),
+                    secondaryButton: .cancel(Text("キャンセル")))
+            }
+        }
+        .sheet(item: $viewModel.sheet) {
+            viewModel.setConfigs()
+        } content: { item in
+            switch item {
+            case .questionNumber:
+                QuestionNumberSelecter(questionNumber: $viewModel.questionNumber)
+            }
         }
     }
 }
