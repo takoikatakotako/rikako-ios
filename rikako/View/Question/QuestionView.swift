@@ -2,11 +2,11 @@ import SwiftUI
 
 struct QuestionView: View {
     @StateObject var viewModel: QuestionViewModel
-    @Binding var showingSheet: HomeViewFullScreenCover?
+    @Binding var fullScreen: HomeViewFullScreenCover?
     
     init(questinos: [Question], showingSheet: Binding<HomeViewFullScreenCover?>) {
         _viewModel = StateObject(wrappedValue: QuestionViewModel(questions: questinos))
-        self._showingSheet = showingSheet
+        self._fullScreen = showingSheet
     }
     
     var body: some View {
@@ -14,7 +14,7 @@ struct QuestionView: View {
             VStack(spacing: 8) {
                 ZStack {
                     Button(action: {
-                        viewModel.showingModal = true
+                        viewModel.showQuestionSheet()
                     }) {
                         VStack {
                             Text(viewModel.question.text)
@@ -29,7 +29,7 @@ struct QuestionView: View {
                     HStack {
                         ForEach(viewModel.question.images, id: \.self) { image in
                             Button {
-                                viewModel.showingModal = true
+                                viewModel.showImageViewerSheet(image: image)
                             } label: {
                                 if let uiImage = viewModel.getUIImage(name: image) {
                                     Image(uiImage: uiImage)
@@ -50,7 +50,7 @@ struct QuestionView: View {
                         Spacer()
                         HStack(spacing: 0) {
                             Spacer()
-
+                            
                             Button(action: {
                                 viewModel.skip()
                             }, label: {
@@ -64,7 +64,7 @@ struct QuestionView: View {
                             .padding(.trailing, 8)
                             
                             Button(action: {
-                                viewModel.showingModal = true
+                                viewModel.showAnserSheet()
                             }, label: {
                                 Text("答えを見る")
                                     .frame(width: 98, height: 32)
@@ -104,15 +104,26 @@ struct QuestionView: View {
             }
             
             NavigationLink(
-                destination: ResultView(questions: viewModel.questions, results: viewModel.results, showingSheet: $showingSheet),
+                destination: ResultView(questions: viewModel.questions, results: viewModel.results, showingSheet: $fullScreen),
                 isActive: $viewModel.goReultView,
                 label: {
                     EmptyView()
                 })
         }
-        .sheet(isPresented: $viewModel.showingModal) {
-            NavigationView {
-                QuestionDetailView(question: viewModel.question)
+        .sheet(item: $viewModel.sheet) { item in
+            switch item {
+            case let .question(_, question):
+                NavigationView {
+                    QuestionDetailView(question: question)
+                }
+            case let .image(_, image):
+                NavigationView {
+                    ImageViewer(imageName: image)
+                }
+            case let .answer(_, question):
+                NavigationView {
+                    QuestionAnswer(question: question)
+                }
             }
         }
         .alert(isPresented: $viewModel.showingAlert) {
@@ -120,7 +131,7 @@ struct QuestionView: View {
                   message: Text("問題の途中ですがホーム画面に戻りますか？"),
                   primaryButton: .cancel(Text("キャンセル")),
                   secondaryButton: .default(Text("はい"), action: {
-                    showingSheet = nil
+                    fullScreen = nil
                   }))
         }
         .navigationBarTitle("問題")

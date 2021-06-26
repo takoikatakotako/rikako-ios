@@ -2,19 +2,35 @@ import SwiftUI
 import AVKit
 import AudioToolbox
 
+enum QuestionViewSheet: Identifiable {
+    case question(UUID, Question)
+    case image(UUID, String)
+    case answer(UUID, Question)
+    var id: UUID {
+        switch self {
+        case let .question(id, _):
+            return id
+        case let .image(id, _):
+            return id
+        case let .answer(id, _):
+            return id
+        }
+    }
+}
+
 class QuestionViewModel: ObservableObject {
     @Published var question: Question
-    @Published var showingModal = false
     @Published var showingResultImage: Bool?
     @Published var buttonDisabled: Bool = false
     @Published var results: [Bool] = []
     @Published var goReultView = false
     @Published var showingAlert = false
+    @Published var sheet: QuestionViewSheet?
     let soundOn: Bool
     let vibOn: Bool
     let fileRepository = FileRepository()
     let userDefaultsRepository = UserDefaultsRepository()
-
+    
     init(questions: [Question]) {
         self.questions = questions
         self.questionIndex = 0
@@ -55,15 +71,24 @@ class QuestionViewModel: ObservableObject {
         nextQuestion()
     }
     
-    func showAnser() {
-        
-    }
     
     func getUIImage(name: String) -> UIImage? {
         guard let imageData = try? fileRepository.getImageFile(name: name) else {
             return nil
         }
         return UIImage(data: imageData)
+    }
+    
+    func showQuestionSheet() {
+        sheet = .question(UUID(), question)
+    }
+    
+    func showAnserSheet() {
+        sheet = .answer(UUID(), question)
+    }
+    
+    func showImageViewerSheet(image: String) {
+        sheet = .image(UUID(), image)
     }
     
     func showCloaseConfirmAlert() {
