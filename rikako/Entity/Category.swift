@@ -12,4 +12,8 @@ struct Category: Codable, Equatable, Identifiable {
     var fileName: String {
         return "\(categoryId).json"
     }
+    
+    static func getFileName(categoryId: Int) -> String {
+        return "\(categoryId).json"
+    }
 }

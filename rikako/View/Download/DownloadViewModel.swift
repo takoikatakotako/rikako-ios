@@ -94,6 +94,29 @@ class DownloadViewModel: ObservableObject {
     
     private func downloadComplate() {
         userDefaultsRepository.setCategoryId(categoryId: categoryId)
+        let reviewFileName = Review.getFileName(categoryId: categoryId)
+        // Review
+        var review: Review = (try? fileRepository.getReviewFile(name: reviewFileName)) ?? Review(categoryId: categoryId)
+        do {
+            let category = try fileRepository.getCategoryFile(categoryId: categoryId)
+            var categoryQuestionIds = category.questions.map { $0.id }
+            var reviewQuestionIds: [Int] = []
+            reviewQuestionIds.append(contentsOf: review.unsolvedQuestionIds)
+            reviewQuestionIds.append(contentsOf: review.missedQuestionIds)
+            reviewQuestionIds.append(contentsOf: review.solvedQuestionIds)
+            for questionId in reviewQuestionIds {
+                categoryQuestionIds.remove(at: questionId)
+            }
+            review.unsolvedQuestionIds.append(contentsOf: categoryQuestionIds)
+            
+            try fileRepository.saveReviewFile(review: review)
+        } catch {
+            self.message = error.localizedDescription
+            self.doneDownload = true
+            return
+        }
+        
+
         self.message = "ダウンロード無事完了！"
         self.doneDownload = true
     }

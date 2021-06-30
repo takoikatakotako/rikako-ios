@@ -29,6 +29,8 @@ class HomeViewModel: ObservableObject {
     @Published var alert: HomeViewAlert? = nil
     @Published var categoryName: String = ""
     @Published var progressText: String = ""
+    @Published var reviewText: String = ""
+    @Published var studyText: String = ""
 
     let fileRepository = FileRepository()
     let userDefaultsRepository = UserDefaultsRepository()
@@ -40,12 +42,23 @@ class HomeViewModel: ObservableObject {
     
     func setCategoryInfo() {
         if let categoryId = userDefaultsRepository.getCategoryId(),
-           let category = try? fileRepository.getCategoryFile(categoryId: categoryId) {
-            categoryName = category.name
-            progressText = "達成率2.3%"
+           let category = try? fileRepository.getCategoryFile(categoryId: categoryId),
+           let review = try? fileRepository.getReviewFile(name: Review.getFileName(categoryId: categoryId)) {
+            categoryName = category.name            
+            // 進捗率
+            if review.unsolvedQuestionIds.count == 0 {
+                progressText = "達成率100%"
+            } else {
+                let progressRate = Float(review.solvedQuestionIds.count) / Float(category.questions.count)
+                progressText = "達成率\(String(format:"%.1f", progressRate))%"
+            }
+            reviewText = "復習(\(review.missedQuestionIds.count))"
+            studyText = "未学習(\(review.unsolvedQuestionIds.count))"
         } else {
             categoryName = "カテゴリ未設定"
             progressText = ""
+            reviewText = "復習"
+            studyText = "未学習"
         }
         questionNumber = userDefaultsRepository.getQuestionNumber()
     }

@@ -4,7 +4,8 @@ struct FileRepository {
     let categoriesDirectoryName = "categories"
     let questionsDirectoryName = "questions"
     let imagesDirectoryName = "images"
-
+    let reviewsDirectoryName = "reviews"
+    
     func initialize() throws {
         let categoriesDirectoryUrl = try getDocumentsDirectoryUrl().appendingPathComponent(categoriesDirectoryName)
         if !FileManager.default.fileExists(atPath: categoriesDirectoryUrl.path) {
@@ -18,8 +19,13 @@ struct FileRepository {
         if !FileManager.default.fileExists(atPath: imagesDirectoryUrl.path) {
             try FileManager.default.createDirectory(atPath: imagesDirectoryUrl.path, withIntermediateDirectories: false, attributes: nil)
         }
+        
+        let reviewsDirectoryUrl = try getDocumentsDirectoryUrl().appendingPathComponent(reviewsDirectoryName, isDirectory: true)
+        if !FileManager.default.fileExists(atPath: reviewsDirectoryUrl.path) {
+            try FileManager.default.createDirectory(atPath: reviewsDirectoryUrl.path, withIntermediateDirectories: false, attributes: nil)
+        }
     }
-
+    
     func saveCategoryFile(category: Category) throws {
         let data = try JSONEncoder().encode(category)
         let fileUrl = try getDocumentsDirectoryUrl().appendingPathComponent(categoriesDirectoryName, isDirectory: true).appendingPathComponent(category.fileName)
@@ -48,6 +54,19 @@ struct FileRepository {
         let fileUrl = try getDocumentsDirectoryUrl().appendingPathComponent(imagesDirectoryName, isDirectory: true).appendingPathComponent(name)
         let data = try Data(contentsOf: fileUrl)
         return data
+    }
+    
+    func saveReviewFile(review: Review) throws {
+        let data = try JSONEncoder().encode(review)
+        let fileUrl = try getDocumentsDirectoryUrl().appendingPathComponent(reviewsDirectoryName, isDirectory: true).appendingPathComponent(Review.getFileName(categoryId: review.categoryId))
+        try data.write(to: fileUrl, options: .atomic)
+    }
+    
+    func getReviewFile(name: String) throws -> Review {
+        let fileUrl = try getDocumentsDirectoryUrl().appendingPathComponent(reviewsDirectoryName, isDirectory: true).appendingPathComponent(name)
+        let data = try Data(contentsOf: fileUrl)
+        let review = try JSONDecoder().decode(Review.self, from: data)
+        return review
     }
     
     private func getDocumentsDirectoryUrl() throws -> URL {

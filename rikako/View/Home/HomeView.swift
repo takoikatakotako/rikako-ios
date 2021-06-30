@@ -31,7 +31,7 @@ struct HomeView: View {
                     Button(action: {
                         viewModel.studyButtonTapped()
                     }, label: {
-                        Text("復習(23)")
+                        Text(viewModel.reviewText)
                             .foregroundColor(Color.white)
                             .font(Font.system(size: 20).bold())
                             .frame(minWidth: 0, maxWidth: .infinity)
@@ -43,7 +43,7 @@ struct HomeView: View {
                     Button(action: {
                         viewModel.studyButtonTapped()
                     }, label: {
-                        Text("未学習(13)")
+                        Text(viewModel.studyText)
                             .foregroundColor(Color.white)
                             .font(Font.system(size: 20).bold())
                             .frame(minWidth: 0, maxWidth: .infinity)
