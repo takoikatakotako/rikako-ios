@@ -45,6 +45,13 @@ struct FileRepository {
         try data.write(to: fileUrl, options: .atomic)
     }
     
+    func getQuestionFile(name: String) throws -> Question {
+        let fileUrl = try getDocumentsDirectoryUrl().appendingPathComponent(questionsDirectoryName, isDirectory: true).appendingPathComponent(name)
+        let data = try Data(contentsOf: fileUrl)
+        let question = try JSONDecoder().decode(Question.self, from: data)
+        return question
+    }
+    
     func saveImageFile(name: String, data: Data) throws {
         let fileUrl = try getDocumentsDirectoryUrl().appendingPathComponent(imagesDirectoryName, isDirectory: true).appendingPathComponent(name)
         try data.write(to: fileUrl, options: .atomic)
@@ -55,7 +62,7 @@ struct FileRepository {
         let data = try Data(contentsOf: fileUrl)
         return data
     }
-    
+        
     func saveReviewFile(review: Review) throws {
         let data = try JSONEncoder().encode(review)
         let fileUrl = try getDocumentsDirectoryUrl().appendingPathComponent(reviewsDirectoryName, isDirectory: true).appendingPathComponent(Review.getFileName(categoryId: review.categoryId))

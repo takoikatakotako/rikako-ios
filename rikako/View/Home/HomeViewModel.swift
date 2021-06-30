@@ -49,7 +49,7 @@ class HomeViewModel: ObservableObject {
             if review.unsolvedQuestionIds.count == 0 {
                 progressText = "達成率100%"
             } else {
-                let progressRate = Float(review.solvedQuestionIds.count) / Float(category.questions.count)
+                let progressRate = Float(review.solvedQuestionIds.count) / Float(category.questions.count) * 100
                 progressText = "達成率\(String(format:"%.1f", progressRate))%"
             }
             reviewText = "復習(\(review.missedQuestionIds.count))"
@@ -72,8 +72,13 @@ class HomeViewModel: ObservableObject {
     }
     
     func reviewButtonTapped() {
-        if userDefaultsRepository.getCategoryId() == nil {
+        guard let categoryId = userDefaultsRepository.getCategoryId() else {
             alert = .message(UUID(), "カテゴリーが選択されていません。")
+            return
+        }
+        guard let  review =  try? fileRepository.getReviewFile(name: Review.getFileName(categoryId: categoryId)),
+              review.missedQuestionIds.count != 0 else {
+            alert = .message(UUID(), "復習問題ありません。")
             return
         }
         sheet = .review
@@ -89,9 +94,15 @@ class HomeViewModel: ObservableObject {
     
     func getReviewQuestions() -> [Question] {
         guard let categoryId = userDefaultsRepository.getCategoryId(),
-              let category = try? fileRepository.getCategoryFile(categoryId: categoryId) else {
+              let review = try? fileRepository.getReviewFile(name: Review.getFileName(categoryId: categoryId)) else {
             return []
         }
-        return Array(category.questions.shuffled().prefix(questionNumber))
+        var questions: [Question] = []
+        for questionId in review.missedQuestionIds.prefix(questionNumber) {
+            if let question = try? fileRepository.getQuestionFile(name: Question.getFileName(questionId: questionId)) {
+                questions.append(question)
+            }
+        }        
+        return Array(questions.shuffled().prefix(questionNumber))
     }
 }

@@ -29,7 +29,7 @@ struct HomeView: View {
                 
                 HStack(spacing: 12) {
                     Button(action: {
-                        viewModel.studyButtonTapped()
+                        viewModel.reviewButtonTapped()
                     }, label: {
                         Text(viewModel.reviewText)
                             .foregroundColor(Color.white)
@@ -74,7 +74,7 @@ struct HomeView: View {
         .alert(item: $viewModel.alert) {item in
             switch item {
             case let .message(_, message):
-                return Alert(title: Text(message))
+                return Alert(title: Text(""), message: Text(message))
             }
         }
     }

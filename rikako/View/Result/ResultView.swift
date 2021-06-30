@@ -7,29 +7,28 @@ struct ResultView: View {
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            
             List {
                 ResultListHeader(results: results)
-                
                 ForEach(Array(zip(questions.indices, questions)), id: \.0) { index, question in
                     NavigationLink(
                         destination: QuestionAnswer(question: question),
                         label: {
                             ResultListRow(result: results[index], text: question.text)
                         })
-                    
                 }
-                
                 // TODO: コードでもう少し厳密にする。計算する。 Scroll + LazyVStack もありかも
+                // https://stackoverflow.com/questions/56553672/how-to-remove-the-line-separators-from-a-list-in-swiftui-without-using-foreach
                 if questions.count > 5 {
                     Text("")
                         .padding(.bottom, 60)
+                    
                 }
                 
             }
             .listStyle(PlainListStyle())
             
             Button(action: {
+                save()
                 showingSheet = nil
             }, label: {
                 Text("トップに戻る")
@@ -46,6 +45,29 @@ struct ResultView: View {
         .navigationTitle("回答結果")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
+    }
+    
+    private func save() {
+        let fileRepository = FileRepository()
+        guard let categoryId = UserDefaultsRepository().getCategoryId(),
+              var review = try? fileRepository.getReviewFile(name: Review.getFileName(categoryId: categoryId)) else {
+            return
+        }
+        for (index, result) in results.enumerated() {
+            let questionId = questions[index].id
+            // 未学習から削除
+            if let index = review.unsolvedQuestionIds.firstIndex(of: questionId) {
+                review.unsolvedQuestionIds.remove(at: index)
+            }
+            if result {
+                // 学習済みに追加
+                review.solvedQuestionIds.append(questionId)
+            } else {
+                // 要復習に追加
+                review.missedQuestionIds.append(questionId)
+            }
+        }
+        try? fileRepository.saveReviewFile(review: review)
     }
 }
 
