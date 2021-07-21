@@ -5,15 +5,16 @@ struct HomeView: View {
     
     var body: some View {
         ZStack {
-            Color("main")
+            Color(R.color.main.name)
                 .ignoresSafeArea(edges: .all)
                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                 .background(Color.red)
             
             VStack {
                 Spacer()
-                Image("top-app-logo")
-                Image("top-rikako-standing")
+                Image(R.image.topAppLogo.name)
+                    .padding(.bottom, 36)
+                Image(R.image.topRikakoStanding.name)
                 Spacer()
                 HStack {
                     Text(viewModel.categoryName)
@@ -36,7 +37,7 @@ struct HomeView: View {
                             .font(Font.system(size: 20).bold())
                             .frame(minWidth: 0, maxWidth: .infinity)
                             .frame(height: 48)
-                            .background(Color("incorrectBlue"))
+                            .background(Color(R.color.incorrectBlue.name))
                             .cornerRadius(8)
                     })
                     
@@ -48,7 +49,7 @@ struct HomeView: View {
                             .font(Font.system(size: 20).bold())
                             .frame(minWidth: 0, maxWidth: .infinity)
                             .frame(height: 48)
-                            .background(Color("correctPink"))
+                            .background(Color(R.color.correctPink.name))
                             .cornerRadius(8)
                     })
                 }
@@ -59,20 +60,31 @@ struct HomeView: View {
         .onAppear {
             viewModel.setCategoryInfo()
         }
-        .fullScreenCover(item: $viewModel.sheet) { item in
+        .fullScreenCover(item: $viewModel.sheet, onDismiss: {
+            viewModel.setCategoryInfo()
+        }, content: { item in
             switch item {
-            case .study:
+            case let .study(_, questions):
                 NavigationView {
-                    QuestionView(questinos: viewModel.getStudyQuestions(), showingSheet: $viewModel.sheet)
+                    QuestionView(questionType: .study, questinos: questions, showingSheet: $viewModel.sheet)
                 }
-            case .review:
+            case let .review(_, questions):
                 NavigationView {
-                    QuestionView(questinos: viewModel.getStudyQuestions(), showingSheet: $viewModel.sheet)
+                    QuestionView(questionType: .review, questinos: questions, showingSheet: $viewModel.sheet)
                 }
             }
-        }
+        })
+        
         .alert(item: $viewModel.alert) {item in
             switch item {
+            case .questionEmpty(_):
+                return Alert(
+                    title: Text("問題がありません"),
+                    message: Text("解ける問題がありません。既に解いている問題をもう一度解きますか？"),
+                    primaryButton: .default(Text("はい"), action: {
+                        viewModel.solvedToUnsolved()
+                    }),
+                    secondaryButton: .cancel(Text("閉じる")))
             case let .message(_, message):
                 return Alert(title: Text(""), message: Text(message))
             }

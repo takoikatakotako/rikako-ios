@@ -1,10 +1,12 @@
 import SwiftUI
 
 struct QuestionView: View {
+    let questionType: QuestionType
     @StateObject var viewModel: QuestionViewModel
     @Binding var fullScreen: HomeViewFullScreenCover?
     
-    init(questinos: [Question], showingSheet: Binding<HomeViewFullScreenCover?>) {
+    init(questionType: QuestionType, questinos: [Question], showingSheet: Binding<HomeViewFullScreenCover?>) {
+        self.questionType = questionType
         _viewModel = StateObject(wrappedValue: QuestionViewModel(questions: questinos))
         self._fullScreen = showingSheet
     }
@@ -107,7 +109,7 @@ struct QuestionView: View {
             }
             
             NavigationLink(
-                destination: ResultView(questions: viewModel.questions, results: viewModel.results, showingSheet: $fullScreen),
+                destination: ResultView(questionType: questionType, questions: viewModel.questions, results: viewModel.results, showingSheet: $fullScreen),
                 isActive: $viewModel.goReultView,
                 label: {
                     EmptyView()
@@ -146,15 +148,15 @@ struct QuestionView: View {
                 .renderingMode(.template)
                 .foregroundColor(.black)
         }))
+        .accentColor(Color(R.color.main.name))
     }
 }
 
 struct QuestionView_Previews: PreviewProvider {
-    
     struct PreviewWrapper: View {
-        @State var showingSheet: HomeViewFullScreenCover? = .study
+        @State var showingSheet: HomeViewFullScreenCover? = nil
         var body: some View {
-            QuestionView(questinos: [Question.mock()], showingSheet: $showingSheet)
+            QuestionView(questionType: .study, questinos: [Question.mock()], showingSheet: $showingSheet)
             
         }
     }

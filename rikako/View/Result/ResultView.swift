@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct ResultView: View {
+    let questionType: QuestionType
     let questions: [Question]
     let results: [Bool]
     @Binding var showingSheet: HomeViewFullScreenCover?
@@ -48,11 +49,21 @@ struct ResultView: View {
     }
     
     private func save() {
+        switch questionType {
+        case .study:
+            saveForStudy()
+        case .review:
+            saveForReview()
+        }
+    }
+    
+    private func saveForStudy() {
         let fileRepository = FileRepository()
         guard let categoryId = UserDefaultsRepository().getCategoryId(),
               var review = try? fileRepository.getReviewFile(name: Review.getFileName(categoryId: categoryId)) else {
             return
         }
+        // 未学習から解いた問題を削除し、間違えた問題は復習リストに追加
         for (index, result) in results.enumerated() {
             let questionId = questions[index].id
             // 未学習から削除
@@ -61,11 +72,30 @@ struct ResultView: View {
             }
             if result {
                 // 学習済みに追加
-                review.solvedQuestionIds.append(questionId)
+                review.solvedQuestionIds.insert(questionId)
             } else {
                 // 要復習に追加
-                review.missedQuestionIds.append(questionId)
+                review.missedQuestionIds.insert(questionId)
             }
+        }
+        try? fileRepository.saveReviewFile(review: review)
+    }
+    
+    private func saveForReview() {
+        let fileRepository = FileRepository()
+        guard let categoryId = UserDefaultsRepository().getCategoryId(),
+              var review = try? fileRepository.getReviewFile(name: Review.getFileName(categoryId: categoryId)) else {
+            return
+        }
+        // 正解した問題を復習リストから削除する
+        for (index, result) in results.enumerated() {
+            let questionId = questions[index].id
+            // 未学習から削除
+            if result, let index = review.missedQuestionIds.firstIndex(of: questionId){
+                review.missedQuestionIds.remove(at: index)
+            }
+            // 学習済みに追加
+            review.solvedQuestionIds.insert(questionId)
         }
         try? fileRepository.saveReviewFile(review: review)
     }
@@ -73,10 +103,10 @@ struct ResultView: View {
 
 struct ResultView_Previews: PreviewProvider {
     struct PreviewWrapper: View {
-        @State var showingSheet: HomeViewFullScreenCover? = .study
+        @State var showingSheet: HomeViewFullScreenCover? = nil
         var body: some View {
             ResultView(
-                questions: [Question.mock(questionId: 1), Question.mock(questionId: 2), Question.mock(questionId: 3)],
+                questionType: .study, questions: [Question.mock(questionId: 1), Question.mock(questionId: 2), Question.mock(questionId: 3)],
                 results: [true, false, true],
                 showingSheet: $showingSheet)
         }

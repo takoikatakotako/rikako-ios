@@ -2,22 +2,25 @@ import SwiftUI
 import Combine
 
 enum HomeViewFullScreenCover: Identifiable {
-    case study
-    case review
-    var id: Int {
+    case study(UUID, [Question])
+    case review(UUID, [Question])
+    var id: UUID {
         switch self {
-        case .study:
-            return self.hashValue
-        case .review:
-            return self.hashValue
+        case let .study(id, _):
+            return id
+        case let .review(id, _):
+            return id
         }
     }
 }
 
 enum HomeViewAlert: Identifiable {
+    case questionEmpty(UUID)
     case message(UUID, String)
     var id: UUID {
         switch self {
+        case let .questionEmpty(id) :
+            return id
         case let .message(id, _):
             return id
         }
@@ -31,7 +34,7 @@ class HomeViewModel: ObservableObject {
     @Published var progressText: String = ""
     @Published var reviewText: String = ""
     @Published var studyText: String = ""
-
+    
     let fileRepository = FileRepository()
     let userDefaultsRepository = UserDefaultsRepository()
     var questionNumber: Int
@@ -68,41 +71,82 @@ class HomeViewModel: ObservableObject {
             alert = .message(UUID(), "カテゴリーが選択されていません。")
             return
         }
-        sheet = .study
+        
+        do {
+            let questions = try getUnsolvedQuestions()
+            if questions.isEmpty {
+                alert = .questionEmpty(UUID())
+                return
+            }
+            sheet = .study(UUID(), questions)
+        } catch {
+            alert = .message(UUID(), error.localizedDescription)
+        }
     }
     
     func reviewButtonTapped() {
-        guard let categoryId = userDefaultsRepository.getCategoryId() else {
+        if userDefaultsRepository.getCategoryId() == nil {
             alert = .message(UUID(), "カテゴリーが選択されていません。")
             return
         }
-        guard let  review =  try? fileRepository.getReviewFile(name: Review.getFileName(categoryId: categoryId)),
-              review.missedQuestionIds.count != 0 else {
-            alert = .message(UUID(), "復習問題ありません。")
-            return
+
+        do {
+            let questions = try getReviewQuestions()
+            if questions.isEmpty {
+                alert = .questionEmpty(UUID())
+                return
+            }
+            sheet = .review(UUID(), questions)
+        } catch {
+            alert = .message(UUID(), error.localizedDescription)
         }
-        sheet = .review
     }
     
-    func getStudyQuestions() -> [Question] {
-        guard let categoryId = userDefaultsRepository.getCategoryId(),
-              let category = try? fileRepository.getCategoryFile(categoryId: categoryId) else {
-            return []
+    // 学習済みリストの問題を未学習に移す
+    func solvedToUnsolved() {
+        do {
+            guard let categoryId = userDefaultsRepository.getCategoryId(),
+                  var review = try? fileRepository.getReviewFile(name: Review.getFileName(categoryId: categoryId)) else {
+                throw PublicCommonError.unknown
+            }
+            review.unsolvedQuestionIds = review.solvedQuestionIds
+            review.solvedQuestionIds = []
+            try fileRepository.saveReviewFile(review: review)
+            setCategoryInfo()
+        } catch {
+            alert = .message(UUID(), error.localizedDescription)
         }
-        return Array(category.questions.shuffled().prefix(questionNumber))
     }
-    
-    func getReviewQuestions() -> [Question] {
+            
+    // 未学習問題を取得する
+    private func getUnsolvedQuestions() throws -> [Question] {
         guard let categoryId = userDefaultsRepository.getCategoryId(),
               let review = try? fileRepository.getReviewFile(name: Review.getFileName(categoryId: categoryId)) else {
-            return []
+            throw PublicCommonError.unknown
+        }
+        let questionNumber = userDefaultsRepository.getQuestionNumber()
+        let questionsIds = review.unsolvedQuestionIds.prefix(questionNumber)
+        var questions: [Question] = []
+        for questionId in questionsIds.shuffled() {
+            if let question = try? fileRepository.getQuestionFile(name: Question.getFileName(questionId: questionId)) {
+                questions.append(question)
+            }
+        }
+        return questions
+    }
+    
+    // 復習問題を取得する
+    private func getReviewQuestions() throws -> [Question] {
+        guard let categoryId = userDefaultsRepository.getCategoryId(),
+              let review = try? fileRepository.getReviewFile(name: Review.getFileName(categoryId: categoryId)) else {
+            throw PublicCommonError.unknown
         }
         var questions: [Question] = []
         for questionId in review.missedQuestionIds.prefix(questionNumber) {
             if let question = try? fileRepository.getQuestionFile(name: Question.getFileName(questionId: questionId)) {
                 questions.append(question)
             }
-        }        
+        }
         return Array(questions.shuffled().prefix(questionNumber))
     }
 }

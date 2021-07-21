@@ -14,15 +14,21 @@ struct DownloadView: View {
             
             if viewModel.doneDownload {
                 Button {
-                    print("xxxx")
                     presentationMode.wrappedValue.dismiss()
                 } label: {
                     Text("閉じる")
+                        .foregroundColor(Color.black)
+                        .padding(12)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.black, lineWidth: 1)
+                        )
+                        .padding(.top, 16)
                 }
             }
         }
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-        .background(Color.gray.edgesIgnoringSafeArea(.all))
+        .background(Color.white.edgesIgnoringSafeArea(.all))
         .onAppear {
             viewModel.download()
         }

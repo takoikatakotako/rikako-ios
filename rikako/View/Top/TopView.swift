@@ -26,7 +26,7 @@ struct TopView: View {
                 }
                 .tag(2)
         }
-        .accentColor(Color("main"))
+        .accentColor(Color(R.color.main.name))
         .background(Color.white)
     }
 }

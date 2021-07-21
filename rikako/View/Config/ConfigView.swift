@@ -61,7 +61,7 @@ struct ConfigView: View {
                     }
                 }
                 
-                Section(header: SectionHeader(text: "")) {
+                Section(header: SectionHeader(text: "リセット")) {
                     Button {
                         viewModel.resetButtonTapped()
                     } label: {

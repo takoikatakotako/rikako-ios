@@ -6,8 +6,8 @@ struct SectionHeader: View {
         Text(text)
             .padding()
             .frame(width: UIScreen.main.bounds.width, height: 28, alignment: .leading)
-            .background(Color.green)
-            .foregroundColor(Color.white)
+            .background(Color(R.color.viewBackground.name))
+            .foregroundColor(Color.black)
     }
 }
 

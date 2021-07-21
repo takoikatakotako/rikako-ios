@@ -10,8 +10,11 @@ struct CategoryRow: View {
             WebImage(url: URL(string: imagePath))
                 .resizable()
                 .placeholder {
-                    Image("question-correct")
+                    Image(systemName: "photo")
                         .resizable()
+                        .renderingMode(.template)
+                        .foregroundColor(.gray)
+                        .padding(8)
                 }
                 .animation(.easeInOut(duration: 0.5))
                 .transition(.fade)
@@ -23,8 +26,12 @@ struct CategoryRow: View {
             Spacer()
             
             if check {
-                Text("✅")
-                    .padding(.trailing, 16)
+                Image(systemName: "checkmark")
+                    .resizable()
+                    .renderingMode(.template)
+                    .foregroundColor(Color(R.color.main.name))
+                    .frame(width: 18, height: 18)
+                    .padding(.trailing, 8)
             }
         }
     }
