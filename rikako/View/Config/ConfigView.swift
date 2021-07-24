@@ -100,7 +100,7 @@ struct ConfigView: View {
             }
         }
         .fullScreenCover(isPresented: $viewModel.showingTutorial){
-            TutorialHolderView()
+            TutorialAndSetCategoryView()
         }
     }
 }

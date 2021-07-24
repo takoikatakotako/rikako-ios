@@ -1,10 +1,11 @@
 import SwiftUI
 
-struct TutorialHolderView: View {
+struct TutorialAndSetCategoryView: View {
     var body: some View {
         NavigationView {
-            TutorialFirstView()
+            TutorialAndSetCategoryFirst()
         }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 

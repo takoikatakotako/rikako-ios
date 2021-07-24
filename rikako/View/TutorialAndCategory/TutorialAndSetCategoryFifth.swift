@@ -1,11 +1,11 @@
 import SwiftUI
 
-struct TutorialFifthView: View {
+struct TutorialAndSetCategoryFifth: View {
     var body: some View {
         VStack {
             Image(R.image.tutorialScreen4 .name)
             NavigationLink(
-                destination: TutorialSixthView(),
+                destination: TutorialAndSetCategorySixth(),
                 label: {
                     Text("Next")
                 })
@@ -15,6 +15,6 @@ struct TutorialFifthView: View {
 
 struct TutorialFifthView_Previews: PreviewProvider {
     static var previews: some View {
-        TutorialFifthView()
+        TutorialAndSetCategoryFifth()
     }
 }

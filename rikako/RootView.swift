@@ -6,7 +6,7 @@ struct RootView: View {
         if appEnviroment.doneTutorial {
             TopView()
         } else {
-            TutorialHolderView()
+            TutorialAndSetCategoryView()
         }
     }
 }
