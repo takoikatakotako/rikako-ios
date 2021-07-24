@@ -3,8 +3,9 @@ import SwiftUI
 class TutorialAndSetCategoryTenthViewModel: ObservableObject {
     @Published var doneDownload = false
     @Published var showingErrorAlert = false
-    let categoryId: Int
-    let downloadUseCase = DownloadUseCase()
+    private let categoryId: Int
+    private let downloadUseCase = DownloadUseCase()
+    private let categoryUseCase = CategoryUseCase()
     
     init(categoryId: Int) {
         self.categoryId = categoryId
@@ -23,7 +24,13 @@ class TutorialAndSetCategoryTenthViewModel: ObservableObject {
     }
     
     func close() {
-        UserDefaultsRepository().setCategoryId(categoryId: categoryId)
+        do {
+            try categoryUseCase.selectCategory(categoryId: categoryId)
+        } catch {
+            // TODO: エラーハンドリング
+            print("XXXXX")
+            return
+        }
         UserDefaultsRepository().setDoneTutorial(doneTutorial: true)
     }
 }
@@ -61,7 +68,6 @@ struct TutorialAndSetCategoryTenth: View {
             Alert(title: Text("エラー"), message: Text("問題のダウンロードに失敗しました。ネットワークの接続を確認して再度ダウンロードを実行してください。"), primaryButton: .default(Text("ダウンロード"), action: {
                 viewModel.download()
             }), secondaryButton: .cancel(Text("キャンセル"), action: {
-                print("xxxx")
                 presentationMode.wrappedValue.dismiss()
             }))
         }

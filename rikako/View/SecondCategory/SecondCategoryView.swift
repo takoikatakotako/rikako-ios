@@ -30,7 +30,6 @@ struct SecondCategoryView: View {
                     secondaryButton: .cancel())
             }
         }
-
         .fullScreenCover(
             item: $viewModel.fullScreen,
             onDismiss: {
