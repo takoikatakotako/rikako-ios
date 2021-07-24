@@ -1,12 +1,13 @@
 import SwiftUI
 
 struct RootView: View {
-    let fileRepository = FileRepository()
+    @EnvironmentObject var appEnviroment: RikakoAppEnvironment
     var body: some View {
-        TopView()
-            .onAppear {
-                try! fileRepository.initialize()
-            }
+        if appEnviroment.doneTutorial {
+            TopView()
+        } else {
+            TutorialHolderView()
+        }
     }
 }
 

@@ -1,7 +1,10 @@
-import Foundation
+import SwiftUI
 
-class RikakoAppEnvironment {
+class RikakoAppEnvironment: ObservableObject {
+    @Published var doneTutorial: Bool
     
+    init(doneTutorial: Bool) {
+        self.doneTutorial = doneTutorial
+    }
 }
 
-let environment = RikakoAppEnvironment()

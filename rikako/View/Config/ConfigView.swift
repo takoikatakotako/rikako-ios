@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct ConfigView: View {
+    @EnvironmentObject var appEnviroment: RikakoAppEnvironment
     @StateObject var viewModel = ConfigViewModel()
     @Binding var tabSelection: Int
     var body: some View {
@@ -31,7 +32,10 @@ struct ConfigView: View {
                 
                 Section(header: SectionHeader(text: "チュートリアル")) {
                     Button {
-                        
+                        withAnimation() {          // 明示的なアニメーション指定
+                            appEnviroment.doneTutorial = false
+                        }
+                        // viewModel.tutorialButonTapped()
                     } label: {
                         Text("使い方")
                     }
@@ -94,6 +98,9 @@ struct ConfigView: View {
             case .questionNumber:
                 QuestionNumberSelecter(questionNumber: $viewModel.questionNumber)
             }
+        }
+        .fullScreenCover(isPresented: $viewModel.showingTutorial){
+            TutorialHolderView()
         }
     }
 }

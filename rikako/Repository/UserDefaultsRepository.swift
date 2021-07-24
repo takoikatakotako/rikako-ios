@@ -1,8 +1,7 @@
 import Foundation
 
 struct UserDefaultsRepository {
-    static let ALLOW_PENCIL_INPUT = "ALLOW_PENCIL_INPUT"
-    
+    static let DONE_TUTORIAL = "DONE_TUTORIAL"
     static let QUESTION_NUMBER = "QUESTION_NUMBER"
     static let CATEGORY_ID = "CATEGORY_ID"
     static let SOUND_ENABLE = "SOUND_ENABLE"
@@ -10,6 +9,15 @@ struct UserDefaultsRepository {
 
     func initialize() throws {
         
+    }
+    
+    // DoneTutorial
+    func setDoneTutorial(doneTutorial: Bool) {
+        UserDefaults.standard.set(doneTutorial, forKey: Self.DONE_TUTORIAL)
+    }
+    
+    func getDoneTutorial() -> Bool {
+        return UserDefaults.standard.bool(forKey: Self.DONE_TUTORIAL)
     }
     
     // QuestionNumber

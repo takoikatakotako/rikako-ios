@@ -17,6 +17,7 @@ enum ConfigViewAlert: Identifiable {
 class ConfigViewModel: ObservableObject {
     @Published var sheet: ConfigViewSheet?
     @Published var alert: ConfigViewAlert?
+    @Published var showingTutorial: Bool = false
     @Published var questionNumber: Int
     @Published var categoryName: String
     @Published var soundOn: Bool {
@@ -46,6 +47,10 @@ class ConfigViewModel: ObservableObject {
     
     func questionNumberTapped() {
         sheet = .questionNumber
+    }
+    
+    func tutorialButonTapped() {
+        showingTutorial = true
     }
     
     func reviewButtonTapped() {
