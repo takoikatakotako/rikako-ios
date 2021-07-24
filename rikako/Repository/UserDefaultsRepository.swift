@@ -21,7 +21,7 @@ struct UserDefaultsRepository {
     }
     
     // QuestionNumber
-    func setQuestionNumber(questionNumber: Int) {
+    func setQuestionNumber(questionNumber: Int?) {
         UserDefaults.standard.set(questionNumber, forKey: Self.QUESTION_NUMBER)
     }
     
@@ -33,7 +33,7 @@ struct UserDefaultsRepository {
     }
     
     // CategoryId
-    func setCategoryId(categoryId: Int) {
+    func setCategoryId(categoryId: Int?) {
         UserDefaults.standard.set(categoryId, forKey: Self.CATEGORY_ID)
     }
     
@@ -42,7 +42,7 @@ struct UserDefaultsRepository {
     }
     
     // SoundEnable
-    func setSoundEnable(enable: Bool) {
+    func setSoundEnable(enable: Bool?) {
         UserDefaults.standard.set(enable, forKey: Self.SOUND_ENABLE)
     }
     
@@ -54,7 +54,7 @@ struct UserDefaultsRepository {
     }
     
     // VibEnable
-    func setVibEnable(enable: Bool) {
+    func setVibEnable(enable: Bool?) {
         UserDefaults.standard.set(enable, forKey: Self.VIB_ENABLE)
     }
     
@@ -66,7 +66,10 @@ struct UserDefaultsRepository {
     }
     
     func reset() {
-        UserDefaults.standard.set(nil, forKey: Self.QUESTION_NUMBER)
-        UserDefaults.standard.set(nil, forKey: Self.CATEGORY_ID)
+        setDoneTutorial(doneTutorial: false)
+        setVibEnable(enable: true)
+        setSoundEnable(enable: true)
+        setQuestionNumber(questionNumber: nil)
+        setCategoryId(categoryId: nil)
     }
 }

@@ -5,7 +5,7 @@ struct TutorialAndSetCategoryNineth: View {
     @StateObject var viewModel = SecondCategoryViewModel()
     var body: some View {
         List(viewModel.subCategories) { subCategory in
-            NavigationLink(destination: Text("sss")) {
+            NavigationLink(destination: TutorialAndSetCategoryTenth(categoryId: subCategory.categoryId)) {
                 CategoryRow(imagePath: subCategory.imagePath, name: subCategory.name, check: false)
             }
         }

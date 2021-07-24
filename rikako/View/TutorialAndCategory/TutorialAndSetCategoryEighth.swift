@@ -19,6 +19,7 @@ struct TutorialAndSetCategoryEighth: View {
         }
         .navigationTitle("カテゴリ一覧")
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
     }
 }
 

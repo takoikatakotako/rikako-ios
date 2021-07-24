@@ -11,7 +11,6 @@ struct DownloadView: View {
     var body: some View {
         VStack {
             Text(viewModel.message)
-            
             if viewModel.doneDownload {
                 Button {
                     presentationMode.wrappedValue.dismiss()

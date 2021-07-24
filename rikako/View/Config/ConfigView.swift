@@ -32,7 +32,7 @@ struct ConfigView: View {
                 
                 Section(header: SectionHeader(text: "チュートリアル")) {
                     Button {
-                        withAnimation() {          // 明示的なアニメーション指定
+                        withAnimation() {
                             appEnviroment.doneTutorial = false
                         }
                         // viewModel.tutorialButonTapped()
@@ -87,6 +87,9 @@ struct ConfigView: View {
                     message: Text("データをリセットしてもよろしいですか？"),
                     primaryButton: .default(Text("リセット"), action: {
                         viewModel.reset()
+                        withAnimation() {
+                            appEnviroment.doneTutorial = false
+                        }
                     }),
                     secondaryButton: .cancel(Text("キャンセル")))
             }
