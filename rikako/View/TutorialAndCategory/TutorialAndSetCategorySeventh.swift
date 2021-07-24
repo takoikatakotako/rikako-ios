@@ -6,7 +6,7 @@ struct TutorialAndSetCategorySeventh: View {
         VStack {
             Image(R.image.tutorialScreen6.name)
             NavigationLink(
-                destination: FirstCategoryView(),
+                destination: TutorialAndSetCategoryEighth(),
                 label: {
                     Text("Next")
                 })
