@@ -5,7 +5,7 @@ struct TutorialAndSetCategoryFirst: View {
         VStack {
             Image(R.image.tutorialScreen0.name)
             NavigationLink(
-                destination: TutorialAndSetCategoryEighth(),
+                destination: TutorialAndSetCategorySecond(),
                 label: {
                     Text("Next")
                 })
@@ -15,6 +15,6 @@ struct TutorialAndSetCategoryFirst: View {
 
 struct TutorialFirstView_Previews: PreviewProvider {
     static var previews: some View {
-        TutorialAndSetCategoryFirst()
+        TutorialAndSetCategorySecond()
     }
 }
