@@ -11,6 +11,7 @@ struct TutorialAndSetCategorySeventh: View {
                     Text("Next")
                 })
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 

@@ -2,13 +2,8 @@ import SwiftUI
 
 struct TutorialAndSetCategorySecond: View {
     var body: some View {
-        VStack {
-            Image(R.image.tutorialScreen1.name)
-            NavigationLink(
-                destination: TutorialAndSetCategoryThird(),
-                label: {
-                    Text("Next")
-                })
+        TutorialViewContent(imageName: R.image.tutorialScreen1.name) {
+            TutorialAndSetCategoryThird()
         }
     }
 }
