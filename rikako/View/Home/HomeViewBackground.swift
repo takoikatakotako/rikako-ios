@@ -2,6 +2,7 @@ import SwiftUI
 
 struct HomeViewBackground: View {
     let imageName: String
+    private let imageHeight: CGFloat = 100
     @State var firstLine0x: CGFloat
     @State var firstLine0y: CGFloat
     @State var firstLine1x: CGFloat
@@ -54,26 +55,56 @@ struct HomeViewBackground: View {
     var body: some View {
         ZStack {
             Image(R.image.topChemiFormula.name)
+                .resizable()
+                .frame(height: imageHeight)
+                .scaledToFit()
                 .position(x: firstLine0x, y: firstLine0y)
             Image(R.image.topChemiFormula.name)
+                .resizable()
+                .frame(height: imageHeight)
+                .scaledToFit()
                 .position(x: firstLine1x, y: firstLine1y)
             Image(R.image.topChemiFormula.name)
+                .resizable()
+                .frame(height: imageHeight)
+                .scaledToFit()
                 .position(x: firstLine2x, y: firstLine2y)
             
             Image(R.image.topChemiFormula.name)
+                .resizable()
+                .frame(height: imageHeight)
+                .scaledToFit()
                 .position(x: secondLine0x, y: secondLine0y)
             Image(R.image.topChemiFormula.name)
+                .resizable()
+                .frame(height: imageHeight)
+                .scaledToFit()
                 .position(x: secondLine1x, y: secondLine1y)
             Image(R.image.topChemiFormula.name)
+                .resizable()
+                .frame(height: imageHeight)
+                .scaledToFit()
                 .position(x: secondLine2x, y: secondLine2y)
             Image(R.image.topChemiFormula.name)
+                .resizable()
+                .frame(height: imageHeight)
+                .scaledToFit()
                 .position(x: secondLine3x, y: secondLine3y)
             
             Image(R.image.topChemiFormula.name)
+                .resizable()
+                .frame(height: imageHeight)
+                .scaledToFit()
                 .position(x: thirdLine0x, y: thirdLine0y)
             Image(R.image.topChemiFormula.name)
+                .resizable()
+                .scaledToFit()
+                .frame(height: imageHeight)
                 .position(x: thirdLine1x, y: thirdLine1y)
             Image(R.image.topChemiFormula.name)
+                .resizable()
+                .scaledToFit()
+                .frame(height: imageHeight)
                 .position(x: thirdLine1x, y: thirdLine1y)
         }
         .onAppear {
@@ -81,7 +112,6 @@ struct HomeViewBackground: View {
                 Animation
                     .linear(duration: 4)
                     .repeatForever(autoreverses: false)) {
-                
                 let width = UIScreen.main.bounds.width
                 let height = UIScreen.main.bounds.height
                 firstLine0x = width * 0.5
