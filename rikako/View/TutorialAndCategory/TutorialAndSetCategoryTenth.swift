@@ -55,6 +55,12 @@ struct TutorialAndSetCategoryTenth: View {
                     }
                 } label: {
                     Text("閉じる")
+                        .foregroundColor(Color.black)
+                        .padding(12)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.black, lineWidth: 1)
+                        )
                 }
 
             } else {

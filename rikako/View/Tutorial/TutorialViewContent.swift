@@ -15,15 +15,19 @@ struct TutorialViewContent<Content: View>: View {
                 .ignoresSafeArea(edges: .all)
                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
             VStack {
+                Spacer()
                 Image(imageName)
-                    .background(Color.red)
+                Spacer()
                 NavigationLink(
                     destination: destination,
                     label: {
-                        Text("Next")
+                        TutorialNextButton()
+                            .padding()
                     })
+                    .padding(.bottom, 16)
             }
         }
+        .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
     }
 }
