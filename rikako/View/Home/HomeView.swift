@@ -9,6 +9,8 @@ struct HomeView: View {
                 .ignoresSafeArea(edges: .all)
                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                 .background(Color.red)
+
+            HomeViewBackground(imageName: R.image.topChemiFormula.name)
             
             VStack {
                 Spacer()
@@ -58,7 +60,7 @@ struct HomeView: View {
             }
         }
         .onAppear {
-            viewModel.setCategoryInfo()
+            viewModel.setCategoryInfo()            
         }
         .fullScreenCover(item: $viewModel.sheet, onDismiss: {
             viewModel.setCategoryInfo()
