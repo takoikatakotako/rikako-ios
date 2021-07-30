@@ -158,7 +158,7 @@
 		</dict>
 	</array>
 	<key>GADApplicationIdentifier</key>
-	<string>ca-app-pub-3940256099942544~1458002511</string>
+	<string>${GAD_APPLICATION_IDENTIFER}</string>
 	<key>ADMOB_UNIT_ID</key>
 	<string>${ADMOB_UNIT_ID}</string>
 	<key>CFBundleDevelopmentRegion</key>
