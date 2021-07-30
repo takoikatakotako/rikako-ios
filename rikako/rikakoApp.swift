@@ -16,10 +16,8 @@ struct rikakoApp: App {
         GADMobileAds.sharedInstance().start(completionHandler: nil)
         guard let admobUnitId = Bundle.main.infoDictionary?["ADMOB_UNIT_ID"] as? String else {
             fatalError("AdmobのUnitIdが見つかりません")
-        }
-        print(admobUnitId)
-        
-        ADMOB_UNIT_ID = "ca-app-pub-3940256099942544/2934735716"
+        }        
+        ADMOB_UNIT_ID = admobUnitId
     }
     var body: some Scene {
         WindowGroup {
