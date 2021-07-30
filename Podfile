@@ -8,7 +8,7 @@ def install_pods
     pod 'Firebase/Core'
     pod 'Firebase/Analytics'
     # pod 'Firebase/RemoteConfig'
-    # pod 'Google-Mobile-Ads-SDK'
+    pod 'Google-Mobile-Ads-SDK'
   end
   
   target 'RikakoLocal' do

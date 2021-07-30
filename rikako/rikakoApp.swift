@@ -1,5 +1,6 @@
 import SwiftUI
 import Firebase
+import GoogleMobileAds
 
 @main
 struct rikakoApp: App {
@@ -10,6 +11,7 @@ struct rikakoApp: App {
         try? FileRepository().initialize()
         doneTutorial = userDefaultsRepository.getDoneTutorial()
         FirebaseApp.configure()
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
     }
     var body: some Scene {
         WindowGroup {

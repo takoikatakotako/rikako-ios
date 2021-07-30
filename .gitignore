@@ -121,4 +121,6 @@ rikako.xcodeproj/*
 
 vendor/
 *.xcworkspace/*
+rikako/GoogleService-Info.plist
+
 
