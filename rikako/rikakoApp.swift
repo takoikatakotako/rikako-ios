@@ -1,4 +1,5 @@
 import SwiftUI
+import Firebase
 
 @main
 struct rikakoApp: App {
@@ -8,6 +9,7 @@ struct rikakoApp: App {
         try? userDefaultsRepository.initialize()
         try? FileRepository().initialize()
         doneTutorial = userDefaultsRepository.getDoneTutorial()
+        FirebaseApp.configure()
     }
     var body: some Scene {
         WindowGroup {

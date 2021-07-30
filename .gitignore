@@ -119,3 +119,6 @@ R.generated.swift
 rikako.xcodeproj/*
 
 
+vendor/
+*.xcworkspace/*
+
