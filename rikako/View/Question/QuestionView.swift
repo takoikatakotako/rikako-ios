@@ -90,12 +90,10 @@ struct QuestionView: View {
                     }
                     .disabled(viewModel.buttonDisabled)
                 }
+                .padding(.bottom, 8)
                 
-                Text("Admob")
-                    .foregroundColor(Color.white)
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .frame(height: 60)
-                    .background(Color.gray)
+                
+                AdmobBannerView(adUnitID: ADMOB_UNIT_ID)
             }
             
             if viewModel.showingResultImage == true {
