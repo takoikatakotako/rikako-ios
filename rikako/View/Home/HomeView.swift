@@ -17,7 +17,7 @@ struct HomeView: View {
                 Image(R.image.topAppLogo.name)
                     .padding(.bottom, 36)
                 Image(R.image.topRikakoStanding.name)
-                Spacer()
+                Spacer()                
                 HStack {
                     Text(viewModel.categoryName)
                         .foregroundColor(Color.white)
