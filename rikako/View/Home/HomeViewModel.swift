@@ -91,12 +91,17 @@ class HomeViewModel: ObservableObject {
         }
 
         do {
-            let questions = try getReviewQuestions()
-            if questions.isEmpty {
+            let unsolvedQuestions = try getUnsolvedQuestions()
+            let reviewQuestions = try getReviewQuestions()
+            if !unsolvedQuestions.isEmpty && reviewQuestions.isEmpty {
+                alert = .message(UUID(), "未学習の問題を解いてみましょう！")
+                return
+            }
+            if unsolvedQuestions.isEmpty && reviewQuestions.isEmpty {
                 alert = .questionEmpty(UUID())
                 return
             }
-            sheet = .review(UUID(), questions)
+            sheet = .review(UUID(), reviewQuestions)
         } catch {
             alert = .message(UUID(), error.localizedDescription)
         }

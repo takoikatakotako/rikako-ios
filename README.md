@@ -56,3 +56,24 @@ mint run xcodegen xcodegen generate
 ```
 mint run LicensePlist license-plist --output-path rikako/Settings.bundle
 ```
+
+
+
+## 問題データ周りについて
+
+問題データは数種類ある。
+
+### 通常タイプ
+
+QuestionType = normal
+
+- questionId: Int
+- type: QuestionType
+- text: String
+- images: [String]
+- answer: Int
+- answers: [String]
+- comment: String
+- commentImages: [String]
+
+
