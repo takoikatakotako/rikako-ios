@@ -121,21 +121,11 @@ targets:
         Release:
           GAD_APPLICATION_IDENTIFER: ca-app-pub-3940256099942544~1458002511
           ADMOB_UNIT_ID: ca-app-pub-3940256099942544/2934735716
-      dependencies:
+    dependencies:
       - package: R.swift.Library
         product: Rswift
       - package: SDWebImageSwiftUI
         product: SDWebImageSwiftUI
-    dependencies:
-      - package: R.swift.Library
-        product: Rswift
-    preBuildScripts:
-      - script: ./Scripts/BuildPhases/rswift.sh
-        name: R.swift
-        inputFiles:
-          - $TEMP_DIR/rswift-lastrun
-        outputFiles:
-          - $SRCROOT/rikako/Generated/R.generated.swift
   chemist-staging:
     type: application
     platform: iOS
@@ -170,21 +160,11 @@ targets:
         Release:
           GAD_APPLICATION_IDENTIFER: ca-app-pub-3940256099942544~1458002511
           ADMOB_UNIT_ID: ca-app-pub-3940256099942544/2934735716
-      dependencies:
+    dependencies:
       - package: R.swift.Library
         product: Rswift
       - package: SDWebImageSwiftUI
         product: SDWebImageSwiftUI
-    dependencies:
-      - package: R.swift.Library
-        product: Rswift
-    preBuildScripts:
-      - script: ./Scripts/BuildPhases/rswift.sh
-        name: R.swift
-        inputFiles:
-          - $TEMP_DIR/rswift-lastrun
-        outputFiles:
-          - $SRCROOT/rikako/Generated/R.generated.swift
   fp-production:
     type: application
     platform: iOS
