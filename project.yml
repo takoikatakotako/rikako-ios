@@ -31,6 +31,18 @@ schemes:
         RikakoStaging: all
     run:
       config: Debug
+  fp-production:
+    build:
+      targets:
+        fp-production: all
+    run:
+      config: Debug
+  chemist-production:
+    build:
+      targets:
+        chemist-production: all
+    run:
+      config: Debug
   Production:
     build:
       targets:
@@ -114,6 +126,84 @@ targets:
           - $TEMP_DIR/rswift-lastrun
         outputFiles:
           - $SRCROOT/rikako/Generated/R.generated.swift
+  fp-production:
+    type: application
+    platform: iOS
+    deploymentTarget: "14.0"
+    sources:
+      - path: rikako
+    dependencies:
+      - package: R.swift.Library
+        product: Rswift
+    preBuildScripts:
+      - script: ./Scripts/BuildPhases/rswift.sh
+        name: R.swift
+        inputFiles:
+          - $TEMP_DIR/rswift-lastrun
+        outputFiles:
+          - $SRCROOT/rikako/Generated/R.generated.swift
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: jp.conol.chemist
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: 5RH346BQ66
+        INFOPLIST_FILE: rikako/Info.plist
+        MARKETING_VERSION: 3.0.0
+        CURRENT_PROJECT_VERSION: 1
+        TARGETED_DEVICE_FAMILY: 1
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon-Production
+        SWIFT_OPTIMIZATION_LEVEL: -Onone
+      configs:
+        Debug:
+          GAD_APPLICATION_IDENTIFER: ca-app-pub-3940256099942544~1458002511
+          ADMOB_UNIT_ID: ca-app-pub-3940256099942544/2934735716
+        Release:
+          GAD_APPLICATION_IDENTIFER: ca-app-pub-3940256099942544~1458002511
+          ADMOB_UNIT_ID: ca-app-pub-3940256099942544/2934735716
+    dependencies:
+      - package: R.swift.Library
+        product: Rswift
+      - package: SDWebImageSwiftUI
+        product: SDWebImageSwiftUI
+  chemist-production:
+    type: application
+    platform: iOS
+    deploymentTarget: "14.0"
+    sources:
+      - path: rikako
+    dependencies:
+      - package: R.swift.Library
+        product: Rswift
+    preBuildScripts:
+      - script: ./Scripts/BuildPhases/rswift.sh
+        name: R.swift
+        inputFiles:
+          - $TEMP_DIR/rswift-lastrun
+        outputFiles:
+          - $SRCROOT/rikako/Generated/R.generated.swift
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: jp.conol.chemist
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: 5RH346BQ66
+        INFOPLIST_FILE: rikako/Info.plist
+        MARKETING_VERSION: 3.0.0
+        CURRENT_PROJECT_VERSION: 1
+        TARGETED_DEVICE_FAMILY: 1
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon-Production
+        SWIFT_OPTIMIZATION_LEVEL: -Onone
+      configs:
+        Debug:
+          GAD_APPLICATION_IDENTIFER: ca-app-pub-3940256099942544~1458002511
+          ADMOB_UNIT_ID: ca-app-pub-3940256099942544/2934735716
+        Release:
+          GAD_APPLICATION_IDENTIFER: ca-app-pub-3940256099942544~1458002511
+          ADMOB_UNIT_ID: ca-app-pub-3940256099942544/2934735716
+    dependencies:
+      - package: R.swift.Library
+        product: Rswift
+      - package: SDWebImageSwiftUI
+        product: SDWebImageSwiftUI
   RikakoProduction:
     type: application
     platform: iOS

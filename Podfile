@@ -26,6 +26,10 @@ def install_pods
   target 'RikakoStaging' do
     install_pods
   end
+
+  target 'fp-production' do
+    install_pods
+  end
   
   target 'RikakoProduction' do
     install_pods
