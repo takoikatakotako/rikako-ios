@@ -17,14 +17,9 @@ struct ResultView: View {
                             ResultListRow(result: results[index], text: question.text)
                         })
                 }
-                // TODO: コードでもう少し厳密にする。計算する。 Scroll + LazyVStack もありかも
-                // https://stackoverflow.com/questions/56553672/how-to-remove-the-line-separators-from-a-list-in-swiftui-without-using-foreach
-                if questions.count > 5 {
-                    Text("")
-                        .padding(.bottom, 60)
-                    
-                }
-                
+
+                Spacer()
+                .frame(height: 100)
             }
             .listStyle(PlainListStyle())
             
