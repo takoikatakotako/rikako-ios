@@ -11,7 +11,7 @@ def install_pods
     pod 'Google-Mobile-Ads-SDK'
   end
   
-  target 'RikakoLocal' do
+  target 'rikako-local' do
     install_pods
     
     target 'RikakoTests' do
@@ -22,16 +22,19 @@ def install_pods
       inherit! :search_paths
     end
   end
-  
-  target 'RikakoStaging' do
+
+  target 'fp-staging' do
+    install_pods
+  end
+
+  target 'chemist-staging' do
     install_pods
   end
 
   target 'fp-production' do
     install_pods
   end
-  
-  target 'RikakoProduction' do
+
+  target 'chemist-production' do
     install_pods
   end
-  

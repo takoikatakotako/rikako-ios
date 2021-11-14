@@ -12,10 +12,10 @@ packages:
     url: https://github.com/SDWebImage/SDWebImageSwiftUI.git
     from: 2.0.2
 schemes:
-  Local:
+  rikako-local:
     build:
       targets:
-        RikakoLocal: all
+        rikako-local: all
     run:
       config: Debug
     test:
@@ -25,10 +25,16 @@ schemes:
         - name: RikakoTests
           parallelizable: true
           randomExecutionOrder: true
-  Staging:
+  fp-staging:
     build:
       targets:
-        RikakoStaging: all
+        fp-staging: all
+    run:
+      config: Debug
+  chemist-staging:
+    build:
+      targets:
+        chemist-staging: all
     run:
       config: Debug
   fp-production:
@@ -43,15 +49,9 @@ schemes:
         chemist-production: all
     run:
       config: Debug
-  Production:
-    build:
-      targets:
-        RikakoProduction: all
-    run:
-      config: Debug
 
 targets:
-  RikakoLocal:
+  rikako-local:
     type: application
     platform: iOS
     deploymentTarget: "14.0"
@@ -87,7 +87,46 @@ targets:
           - $TEMP_DIR/rswift-lastrun
         outputFiles:
           - $SRCROOT/rikako/Generated/R.generated.swift
-  RikakoStaging:
+  fp-staging:
+    type: application
+    platform: iOS
+    deploymentTarget: "14.0"
+    sources:
+      - path: rikako
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: jp.rikako.staging
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: 5RH346BQ66
+        INFOPLIST_FILE: rikako/Info.plist
+        MARKETING_VERSION: 3.0.0
+        CURRENT_PROJECT_VERSION: 1
+        TARGETED_DEVICE_FAMILY: 1
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon-Staging
+        SWIFT_OPTIMIZATION_LEVEL: -Onone
+      configs:
+        Debug:
+          GAD_APPLICATION_IDENTIFER: ca-app-pub-3940256099942544~1458002511
+          ADMOB_UNIT_ID: ca-app-pub-3940256099942544/2934735716
+        Release:
+          GAD_APPLICATION_IDENTIFER: ca-app-pub-3940256099942544~1458002511
+          ADMOB_UNIT_ID: ca-app-pub-3940256099942544/2934735716
+      dependencies:
+      - package: R.swift.Library
+        product: Rswift
+      - package: SDWebImageSwiftUI
+        product: SDWebImageSwiftUI
+    dependencies:
+      - package: R.swift.Library
+        product: Rswift
+    preBuildScripts:
+      - script: ./Scripts/BuildPhases/rswift.sh
+        name: R.swift
+        inputFiles:
+          - $TEMP_DIR/rswift-lastrun
+        outputFiles:
+          - $SRCROOT/rikako/Generated/R.generated.swift
+  chemist-staging:
     type: application
     platform: iOS
     deploymentTarget: "14.0"
@@ -204,45 +243,6 @@ targets:
         product: Rswift
       - package: SDWebImageSwiftUI
         product: SDWebImageSwiftUI
-  RikakoProduction:
-    type: application
-    platform: iOS
-    deploymentTarget: "14.0"
-    sources:
-      - path: rikako
-    dependencies:
-      - package: R.swift.Library
-        product: Rswift
-    preBuildScripts:
-      - script: ./Scripts/BuildPhases/rswift.sh
-        name: R.swift
-        inputFiles:
-          - $TEMP_DIR/rswift-lastrun
-        outputFiles:
-          - $SRCROOT/rikako/Generated/R.generated.swift
-    settings:
-      base:
-        PRODUCT_BUNDLE_IDENTIFIER: jp.conol.chemist
-        CODE_SIGN_STYLE: Automatic
-        DEVELOPMENT_TEAM: 5RH346BQ66
-        INFOPLIST_FILE: rikako/Info.plist
-        MARKETING_VERSION: 3.0.0
-        CURRENT_PROJECT_VERSION: 1
-        TARGETED_DEVICE_FAMILY: 1
-        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon-Production
-        SWIFT_OPTIMIZATION_LEVEL: -Onone
-      configs:
-        Debug:
-          GAD_APPLICATION_IDENTIFER: ca-app-pub-3940256099942544~1458002511
-          ADMOB_UNIT_ID: ca-app-pub-3940256099942544/2934735716
-        Release:
-          GAD_APPLICATION_IDENTIFER: ca-app-pub-3940256099942544~1458002511
-          ADMOB_UNIT_ID: ca-app-pub-3940256099942544/2934735716
-    dependencies:
-      - package: R.swift.Library
-        product: Rswift
-      - package: SDWebImageSwiftUI
-        product: SDWebImageSwiftUI
   RikakoTests:
     type: bundle.unit-test
     platform: iOS
@@ -252,7 +252,7 @@ targets:
       base:
         INFOPLIST_FILE: rikakoTests/Info.plist
     dependencies:
-      - target: RikakoLocal
+      - target: rikako-local
   RikakoUITests:
     type: bundle.ui-testing
     platform: iOS
@@ -262,4 +262,4 @@ targets:
       base:
         INFOPLIST_FILE: rikakoUITests/Info.plist
     dependencies:
-      - target: RikakoLocal
+      - target: rikako-local
