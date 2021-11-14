@@ -93,6 +93,16 @@ targets:
     deploymentTarget: "14.0"
     sources:
       - path: rikako
+    dependencies:
+      - package: R.swift.Library
+        product: Rswift
+    preBuildScripts:
+      - script: ./Scripts/BuildPhases/rswift.sh
+        name: R.swift
+        inputFiles:
+          - $TEMP_DIR/rswift-lastrun
+        outputFiles:
+          - $SRCROOT/rikako/Generated/R.generated.swift
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: jp.rikako.staging
@@ -132,6 +142,16 @@ targets:
     deploymentTarget: "14.0"
     sources:
       - path: rikako
+    dependencies:
+      - package: R.swift.Library
+        product: Rswift
+    preBuildScripts:
+      - script: ./Scripts/BuildPhases/rswift.sh
+        name: R.swift
+        inputFiles:
+          - $TEMP_DIR/rswift-lastrun
+        outputFiles:
+          - $SRCROOT/rikako/Generated/R.generated.swift
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: jp.rikako.staging
