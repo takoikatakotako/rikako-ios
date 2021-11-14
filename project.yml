@@ -54,7 +54,7 @@ targets:
         MARKETING_VERSION: 3.0.0
         CURRENT_PROJECT_VERSION: 1
         TARGETED_DEVICE_FAMILY: 1
-        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon-Local
+        ASSETCATALOG_COMPILER_APPICON_NAME: icon-local
         SWIFT_OPTIMIZATION_LEVEL: -Onone
       configs:
         Debug:
@@ -100,7 +100,7 @@ targets:
         MARKETING_VERSION: 3.0.0
         CURRENT_PROJECT_VERSION: 1
         TARGETED_DEVICE_FAMILY: 1
-        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon-Production
+        ASSETCATALOG_COMPILER_APPICON_NAME: icon-fp-production
         SWIFT_OPTIMIZATION_LEVEL: -Onone
       configs:
         Debug:
@@ -139,7 +139,7 @@ targets:
         MARKETING_VERSION: 3.0.0
         CURRENT_PROJECT_VERSION: 1
         TARGETED_DEVICE_FAMILY: 1
-        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon-Production
+        ASSETCATALOG_COMPILER_APPICON_NAME: icon-chemist-production
         SWIFT_OPTIMIZATION_LEVEL: -Onone
       configs:
         Debug:

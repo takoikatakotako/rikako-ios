@@ -23,14 +23,6 @@ def install_pods
     end
   end
 
-  target 'fp-staging' do
-    install_pods
-  end
-
-  target 'chemist-staging' do
-    install_pods
-  end
-
   target 'fp-production' do
     install_pods
   end
