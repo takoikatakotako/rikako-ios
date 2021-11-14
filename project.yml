@@ -58,9 +58,11 @@ targets:
         SWIFT_OPTIMIZATION_LEVEL: -Onone
       configs:
         Debug:
+          DISPLAY_NAME: 理科子Local
           GAD_APPLICATION_IDENTIFER: ca-app-pub-3940256099942544~1458002511
           ADMOB_UNIT_ID: ca-app-pub-3940256099942544/2934735716
         Release:
+          DISPLAY_NAME: 理科子Local
           GAD_APPLICATION_IDENTIFER: ca-app-pub-3940256099942544~1458002511
           ADMOB_UNIT_ID: ca-app-pub-3940256099942544/2934735716
     dependencies:
@@ -104,9 +106,11 @@ targets:
         SWIFT_OPTIMIZATION_LEVEL: -Onone
       configs:
         Debug:
+          DISPLAY_NAME: FPアプリ
           GAD_APPLICATION_IDENTIFER: ca-app-pub-3940256099942544~1458002511
           ADMOB_UNIT_ID: ca-app-pub-3940256099942544/2934735716
         Release:
+          DISPLAY_NAME: FPアプリ
           GAD_APPLICATION_IDENTIFER: ca-app-pub-3940256099942544~1458002511
           ADMOB_UNIT_ID: ca-app-pub-3940256099942544/2934735716
     dependencies:
@@ -143,9 +147,11 @@ targets:
         SWIFT_OPTIMIZATION_LEVEL: -Onone
       configs:
         Debug:
+          DISPLAY_NAME: ４択化学
           GAD_APPLICATION_IDENTIFER: ca-app-pub-3940256099942544~1458002511
           ADMOB_UNIT_ID: ca-app-pub-3940256099942544/2934735716
         Release:
+          DISPLAY_NAME: ４択化学
           GAD_APPLICATION_IDENTIFER: ca-app-pub-3940256099942544~1458002511
           ADMOB_UNIT_ID: ca-app-pub-3940256099942544/2934735716
     dependencies:
