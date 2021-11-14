@@ -7,7 +7,7 @@ options:
 packages:
   R.swift.Library:
     url: https://github.com/mac-cain13/R.swift.Library
-    from: 5.2.2
+    from: 5.4.0
   SDWebImageSwiftUI:
     url: https://github.com/SDWebImage/SDWebImageSwiftUI.git
     from: 2.0.2
