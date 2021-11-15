@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct TutorialAndSetCategoryFirst: View {
+struct TutorialAndSetCategory1st: View {
     var body: some View {
         TutorialViewContent(imageName: R.image.tutorialScreen0.name) {
             TutorialAndSetCategorySecond()
@@ -10,6 +10,6 @@ struct TutorialAndSetCategoryFirst: View {
 
 struct TutorialFirstView_Previews: PreviewProvider {
     static var previews: some View {
-        TutorialAndSetCategoryFirst()
+        TutorialAndSetCategory1st()
     }
 }

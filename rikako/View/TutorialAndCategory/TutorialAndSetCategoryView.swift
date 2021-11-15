@@ -3,7 +3,7 @@ import SwiftUI
 struct TutorialAndSetCategoryView: View {
     var body: some View {
         NavigationView {
-            TutorialAndSetCategoryFirst()
+            TutorialAndSetCategory1st()
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }
