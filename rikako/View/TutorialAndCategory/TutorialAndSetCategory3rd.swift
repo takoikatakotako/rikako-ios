@@ -3,7 +3,7 @@ import SwiftUI
 struct TutorialAndSetCategory3rd: View {
     var body: some View {
         TutorialViewContent(imageName: R.image.tutorialScreen2.name) {
-            TutorialAndSetCategoryFourth()
+            TutorialAndSetCategory4th()
         }
     }
 }

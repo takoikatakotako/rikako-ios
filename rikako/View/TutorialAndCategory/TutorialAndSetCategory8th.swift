@@ -28,7 +28,7 @@ class TutorialAndSetCategoryEighthViewModel: ObservableObject {
     }
 }
 
-struct TutorialAndSetCategoryEighth: View {
+struct TutorialAndSetCategory8th: View {
     @StateObject var viewModel = TutorialAndSetCategoryEighthViewModel()
     
     var body: some View {
@@ -53,6 +53,6 @@ struct TutorialAndSetCategoryEighth: View {
 
 struct TutorialAndSetCategoryEighth_Previews: PreviewProvider {
     static var previews: some View {
-        TutorialAndSetCategoryEighth()
+        TutorialAndSetCategory8th()
     }
 }
