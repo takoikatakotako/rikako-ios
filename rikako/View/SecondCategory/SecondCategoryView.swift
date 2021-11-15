@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct SecondCategoryView: View {
-    let mainCategory: MainCategory
+    // let mainCategory: MainCategory
     @StateObject var viewModel = SecondCategoryViewModel()
     var body: some View {
         List(viewModel.subCategories) { subCategory in
@@ -16,7 +16,7 @@ struct SecondCategoryView: View {
             })
         }
         .onAppear {
-            viewModel.fetchSubCategories(fileName: mainCategory.subCategoryName)
+            viewModel.fetchSubCategories(fileName: "fp-categories.json")
         }
         .alert(item: $viewModel.alert) { item in
             switch item {
@@ -38,13 +38,13 @@ struct SecondCategoryView: View {
             DownloadView(categoryId: item.categoryId)
                 .animation(.none)
         }
-        .navigationTitle(mainCategory.name)
+        .navigationTitle("mainCategory.name")
         .navigationBarTitleDisplayMode(.inline)
     }
 }
 
-struct SecondCategoryView_Previews: PreviewProvider {
-    static var previews: some View {
-        SecondCategoryView(mainCategory: MainCategory.mock())
-    }
-}
+//struct SecondCategoryView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SecondCategoryView(mainCategory: MainCategory.mock())
+//    }
+//}

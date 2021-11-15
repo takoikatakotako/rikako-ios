@@ -120,7 +120,7 @@ struct ConfigView_Previews: PreviewProvider {
                         Text("ホーム")
                     }
                     .tag(0)
-                FirstCategoryView()
+                SecondCategoryView()
                     .tabItem {
                         Image(systemName: "books.vertical")
                             .renderingMode(.template)
