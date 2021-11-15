@@ -34,7 +34,7 @@ struct TutorialAndSetCategory8th: View {
     var body: some View {
         List(viewModel.subCategories) { subCategory in
             NavigationLink(
-                destination: TutorialAndSetCategory10th(categoryId: subCategory.categoryId),
+                destination: TutorialAndSetCategory9th(categoryId: subCategory.categoryId),
                 label: {
                     CategoryRow(
                         imagePath: subCategory.imagePath,
