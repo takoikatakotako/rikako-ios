@@ -1,14 +1,14 @@
 import SwiftUI
 import Combine
 
-class TutorialAndSetCategoryEighthViewModel: ObservableObject {
+class TutorialAndSetCategory8thViewModel: ObservableObject {
     private let jsonRepository = JsonRepository()
     
     var subscriptions = Set<AnyCancellable>()
-    @Published var mainCategories: [MainCategory] = []
+    @Published var subCategories: [SubCategory] = []
 
     func fetchMainCategories() {
-        jsonRepository.fetchMainCategory()
+        jsonRepository.fetchSubCategories(fileName: "fp-categories.json")
         .sink(receiveCompletion: { completion in
             switch completion {
             case .finished:
@@ -19,9 +19,9 @@ class TutorialAndSetCategoryEighthViewModel: ObservableObject {
                 // self.errorMessage = error.localizedDescription
                 break
             }
-        }, receiveValue: { mainCategories in
+        }, receiveValue: { subCategories in
             DispatchQueue.main.async {
-                self.mainCategories = mainCategories
+                self.subCategories = subCategories
             }
         })
         .store(in: &self.subscriptions)
@@ -29,16 +29,16 @@ class TutorialAndSetCategoryEighthViewModel: ObservableObject {
 }
 
 struct TutorialAndSetCategory8th: View {
-    @StateObject var viewModel = TutorialAndSetCategoryEighthViewModel()
+    @StateObject var viewModel = TutorialAndSetCategory8thViewModel()
     
     var body: some View {
-        List(viewModel.mainCategories) { mainCategory in
+        List(viewModel.subCategories) { subCategory in
             NavigationLink(
-                destination: TutorialAndSetCategory9th(mainCategory: mainCategory),
+                destination: TutorialAndSetCategory10th(categoryId: subCategory.categoryId),
                 label: {
                     CategoryRow(
-                        imagePath: mainCategory.imagePath,
-                        name: mainCategory.name, check: false
+                        imagePath: subCategory.imagePath,
+                        name: subCategory.name, check: false
                     )
                 })
         }
