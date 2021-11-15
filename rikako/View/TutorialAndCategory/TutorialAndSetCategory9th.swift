@@ -28,12 +28,12 @@ class TutorialAndSetCategoryNinethViewModel: ObservableObject {
     }
 }
 
-struct TutorialAndSetCategoryNineth: View {
+struct TutorialAndSetCategory9th: View {
     let mainCategory: MainCategory
     @StateObject var viewModel = TutorialAndSetCategoryNinethViewModel()
     var body: some View {
         List(viewModel.subCategories) { subCategory in
-            NavigationLink(destination: TutorialAndSetCategoryTenth(categoryId: subCategory.categoryId)) {
+            NavigationLink(destination: TutorialAndSetCategory10th(categoryId: subCategory.categoryId)) {
                 CategoryRow(imagePath: subCategory.imagePath, name: subCategory.name, check: false)
             }
         }
@@ -47,6 +47,6 @@ struct TutorialAndSetCategoryNineth: View {
 
 struct TutorialAndSetCategoryNineth_Previews: PreviewProvider {
     static var previews: some View {
-        TutorialAndSetCategoryNineth(mainCategory: MainCategory(name: "ss", image: "sss", subCategoryName: "sss"))
+        TutorialAndSetCategory9th(mainCategory: MainCategory(name: "ss", image: "sss", subCategoryName: "sss"))
     }
 }

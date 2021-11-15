@@ -35,7 +35,7 @@ class TutorialAndSetCategoryTenthViewModel: ObservableObject {
     }
 }
 
-struct TutorialAndSetCategoryTenth: View {
+struct TutorialAndSetCategory10th: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var appEnviroment: RikakoAppEnvironment
     @StateObject var viewModel: TutorialAndSetCategoryTenthViewModel
@@ -83,6 +83,6 @@ struct TutorialAndSetCategoryTenth: View {
 
 struct TutorialAndSetCategoryTenth_Previews: PreviewProvider {
     static var previews: some View {
-        TutorialAndSetCategoryTenth(categoryId: 3)
+        TutorialAndSetCategory10th(categoryId: 3)
     }
 }
