@@ -2,11 +2,11 @@ import SwiftUI
 import Combine
 
 struct JsonRepository {
-    func fetchSubCategories(fileName: String) -> AnyPublisher<[SubCategory], Error> {
+    func fetchSubCategories(fileName: String) -> AnyPublisher<[CategoryResponse], Error> {
         let url = URL(string: "https://rikako.jp/resource/categories/" + fileName)!
         return URLSession.shared
             .dataTaskPublisher(for: url)
-            .tryMap { try JSONDecoder().decode(SubCategoriesResponse.self, from: $0.data).categories }
+            .tryMap { try JSONDecoder().decode(CategoriesResponse.self, from: $0.data).categories }
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }

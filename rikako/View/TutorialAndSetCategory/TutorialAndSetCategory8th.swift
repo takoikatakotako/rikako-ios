@@ -5,7 +5,7 @@ class TutorialAndSetCategory8thViewModel: ObservableObject {
     private let jsonRepository = JsonRepository()
     
     var subscriptions = Set<AnyCancellable>()
-    @Published var subCategories: [SubCategory] = []
+    @Published var subCategories: [CategoryResponse] = []
 
     func fetchMainCategories() {
         jsonRepository.fetchSubCategories(fileName: "fp-categories.json")
