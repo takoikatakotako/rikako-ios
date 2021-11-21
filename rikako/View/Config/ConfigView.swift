@@ -73,6 +73,7 @@ struct ConfigView: View {
                     }
                 }
             }
+            .listStyle(.plain)
             .navigationTitle("設定")
             .navigationBarTitleDisplayMode(.inline)
         }
@@ -120,7 +121,7 @@ struct ConfigView_Previews: PreviewProvider {
                         Text("ホーム")
                     }
                     .tag(0)
-                SecondCategoryView()
+                CategoriesView()
                     .tabItem {
                         Image(systemName: "books.vertical")
                             .renderingMode(.template)

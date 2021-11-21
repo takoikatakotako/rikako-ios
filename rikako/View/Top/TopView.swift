@@ -11,7 +11,7 @@ struct TopView: View {
                     Text("ホーム")
                 }
                 .tag(0)
-            SecondCategoryView()
+            CategoriesView()
                 .tabItem {
                     Image(systemName: "books.vertical")
                         .renderingMode(.template)

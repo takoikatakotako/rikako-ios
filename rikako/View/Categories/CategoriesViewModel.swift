@@ -25,7 +25,7 @@ enum SubCategoryViewFullScreen: Identifiable {
     }
 }
 
-class SecondCategoryViewModel: ObservableObject {
+class CategoriesViewModel: ObservableObject {
     private let jsonRepository = JsonRepository()
     private let userDefaultsRepository = UserDefaultsRepository()
     var subscriptions = Set<AnyCancellable>()
