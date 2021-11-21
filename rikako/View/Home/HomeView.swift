@@ -76,7 +76,6 @@ struct HomeView: View {
                 }
             }
         })
-        
         .alert(item: $viewModel.alert) {item in
             switch item {
             case .questionEmpty(_):

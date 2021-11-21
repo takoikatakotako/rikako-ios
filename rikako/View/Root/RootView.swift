@@ -2,6 +2,10 @@ import SwiftUI
 
 struct RootView: View {
     @EnvironmentObject var appEnviroment: RikakoAppEnvironment
+    
+    init() {
+        UITabBar.appearance().barTintColor = UIColor.blue
+    }
     var body: some View {
         if appEnviroment.doneTutorial {
             TopView()
