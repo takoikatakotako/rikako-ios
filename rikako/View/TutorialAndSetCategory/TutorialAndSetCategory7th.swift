@@ -1,16 +1,16 @@
 import SwiftUI
 
-struct TutorialAndSetCategorySeventh: View {
+struct TutorialAndSetCategory7th: View {
     @EnvironmentObject var appEnviroment: RikakoAppEnvironment
     var body: some View {
         TutorialViewContent(imageName: R.image.tutorialScreen6.name) {
-            TutorialAndSetCategoryEighth()
+            TutorialAndSetCategory8th()
         }
     }
 }
 
-struct TutorialSeventhView_Previews: PreviewProvider {
+struct TutorialAndSetCategory7th_Previews: PreviewProvider {
     static var previews: some View {
-        TutorialAndSetCategorySeventh()
+        TutorialAndSetCategory7th()
     }
 }

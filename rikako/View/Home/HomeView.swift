@@ -5,19 +5,13 @@ struct HomeView: View {
     
     var body: some View {
         ZStack {
-            Color(R.color.main.name)
-                .ignoresSafeArea(edges: .all)
-                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-                .background(Color.red)
-
             HomeViewBackground(imageName: R.image.topChemiFormula.name)
-            
             VStack {
                 Spacer()
                 Image(R.image.topAppLogo.name)
                     .padding(.bottom, 36)
                 Image(R.image.topRikakoStanding.name)
-                Spacer()                
+                Spacer()
                 HStack {
                     Text(viewModel.categoryName)
                         .foregroundColor(Color.white)
@@ -59,8 +53,10 @@ struct HomeView: View {
                 .padding(.bottom, 8)
             }
         }
+        .background(Color(R.color.main.name))
+        .ignoresSafeArea(.all, edges: .top)
         .onAppear {
-            viewModel.setCategoryInfo()            
+            viewModel.setCategoryInfo()
         }
         .fullScreenCover(item: $viewModel.sheet, onDismiss: {
             viewModel.setCategoryInfo()
@@ -76,7 +72,6 @@ struct HomeView: View {
                 }
             }
         })
-        
         .alert(item: $viewModel.alert) {item in
             switch item {
             case .questionEmpty(_):

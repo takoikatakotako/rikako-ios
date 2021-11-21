@@ -1,6 +1,6 @@
 import SwiftUI
 
-class TutorialAndSetCategoryTenthViewModel: ObservableObject {
+class TutorialAndSetCategory9thViewModel: ObservableObject {
     @Published var doneDownload = false
     @Published var showingErrorAlert = false
     private let categoryId: Int
@@ -35,13 +35,13 @@ class TutorialAndSetCategoryTenthViewModel: ObservableObject {
     }
 }
 
-struct TutorialAndSetCategoryTenth: View {
+struct TutorialAndSetCategory9th: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var appEnviroment: RikakoAppEnvironment
-    @StateObject var viewModel: TutorialAndSetCategoryTenthViewModel
+    @StateObject var viewModel: TutorialAndSetCategory9thViewModel
     
     init(categoryId: Int) {
-        _viewModel = StateObject(wrappedValue: TutorialAndSetCategoryTenthViewModel(categoryId: categoryId))
+        _viewModel = StateObject(wrappedValue: TutorialAndSetCategory9thViewModel(categoryId: categoryId))
     }
     
     var body: some View {
@@ -81,8 +81,8 @@ struct TutorialAndSetCategoryTenth: View {
     }
 }
 
-struct TutorialAndSetCategoryTenth_Previews: PreviewProvider {
+struct TTutorialAndSetCategory9th_Previews: PreviewProvider {
     static var previews: some View {
-        TutorialAndSetCategoryTenth(categoryId: 3)
+        TutorialAndSetCategory9th(categoryId: 3)
     }
 }
