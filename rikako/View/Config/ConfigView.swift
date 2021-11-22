@@ -28,18 +28,28 @@ struct ConfigView: View {
                             Text("\(viewModel.categoryName)")
                         }
                     }
-                }
-                
-                Section(header: SectionHeader(text: "チュートリアル")) {
+                    
                     Button {
-                        withAnimation() {
-                            appEnviroment.doneTutorial = false
-                        }
-                        // viewModel.tutorialButonTapped()
+                        viewModel.questionAnswerStyleTapped()
                     } label: {
-                        Text("使い方")
+                        HStack {
+                            Text("解答形式")
+                            Spacer()
+                            Text("毎回表示")
+                        }
                     }
                 }
+                
+//                Section(header: SectionHeader(text: "チュートリアル")) {
+//                    Button {
+//                        withAnimation() {
+//                            appEnviroment.doneTutorial = false
+//                        }
+//                        // viewModel.tutorialButonTapped()
+//                    } label: {
+//                        Text("使い方")
+//                    }
+//                }
                 
                 Section(header: SectionHeader(text: "サウンド")) {
                     Toggle(isOn: $viewModel.soundOn) {
@@ -101,6 +111,8 @@ struct ConfigView: View {
             switch item {
             case .questionNumber:
                 QuestionNumberSelecter(questionNumber: $viewModel.questionNumber)
+            case .questionAnswerStyle:
+                AnswerStyleView()
             }
         }
         .fullScreenCover(isPresented: $viewModel.showingTutorial){

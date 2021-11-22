@@ -2,6 +2,7 @@ import Foundation
 
 enum ConfigViewSheet: Identifiable {
     case questionNumber
+    case questionAnswerStyle
     var id: Int {
         self.hashValue
     }
@@ -51,6 +52,10 @@ class ConfigViewModel: ObservableObject {
     
     func tutorialButonTapped() {
         showingTutorial = true
+    }
+    
+    func questionAnswerStyleTapped() {
+        sheet = .questionAnswerStyle
     }
     
     func reviewButtonTapped() {
