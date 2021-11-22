@@ -29,7 +29,7 @@ class CategoriesViewModel: ObservableObject {
     private let jsonRepository = JsonRepository()
     private let userDefaultsRepository = UserDefaultsRepository()
     var subscriptions = Set<AnyCancellable>()
-    @Published var subCategories: [CategoryResponse] = []
+    @Published var subCategories: [CategoryInfo] = []
     @Published var alert: SubCategoryViewAlert?
     @Published var fullScreen: SubCategoryViewFullScreen?
     @Published var selectedCategoryId: Int?
@@ -39,7 +39,7 @@ class CategoriesViewModel: ObservableObject {
     }
     
     func fetchSubCategories(fileName: String) {
-        jsonRepository.fetchSubCategories(fileName: fileName)
+        jsonRepository.fetchCategoryInfos(fileName: fileName)
         .sink(receiveCompletion: { completion in
             switch completion {
             case .finished:
@@ -58,7 +58,7 @@ class CategoriesViewModel: ObservableObject {
         .store(in: &self.subscriptions)
     }
     
-    func categoryTapped(subCategory: CategoryResponse) {
+    func categoryTapped(subCategory: CategoryInfo) {
         alert = .select(subCategory.categoryId, subCategory.name)
     }
     

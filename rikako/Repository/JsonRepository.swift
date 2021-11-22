@@ -2,15 +2,17 @@ import SwiftUI
 import Combine
 
 struct JsonRepository {
-    func fetchSubCategories(fileName: String) -> AnyPublisher<[CategoryResponse], Error> {
+    // CategoryInfoを取得する
+    func fetchCategoryInfos(fileName: String) -> AnyPublisher<[CategoryInfo], Error> {
         let url = URL(string: "https://rikako.jp/resource/categories/" + fileName)!
         return URLSession.shared
             .dataTaskPublisher(for: url)
-            .tryMap { try JSONDecoder().decode(CategoriesResponse.self, from: $0.data).categories }
+            .tryMap { try JSONDecoder().decode(CategoryInfos.self, from: $0.data).categories }
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
     
+    // Categoryを取得する
     func fetchCategory(categoryId: Int) -> AnyPublisher<Category, Error> {
         let url = URL(string: "https://rikako.jp/resource/categories/\(categoryId).json")!
         return URLSession.shared

@@ -5,10 +5,10 @@ class TutorialAndSetCategory8thViewModel: ObservableObject {
     private let jsonRepository = JsonRepository()
     
     var subscriptions = Set<AnyCancellable>()
-    @Published var subCategories: [CategoryResponse] = []
+    @Published var subCategories: [CategoryInfo] = []
 
     func fetchMainCategories() {
-        jsonRepository.fetchSubCategories(fileName: "fp-categories.json")
+        jsonRepository.fetchCategoryInfos(fileName: "fp-categories.json")
         .sink(receiveCompletion: { completion in
             switch completion {
             case .finished:

@@ -1,6 +1,6 @@
 import Foundation
 
-struct CategoryResponse: Decodable, Identifiable {
+struct CategoryInfo: Decodable, Identifiable {
     let categoryId: Int
     let name: String
     let image: String
@@ -14,8 +14,8 @@ struct CategoryResponse: Decodable, Identifiable {
     }
 }
 
-extension CategoryResponse {
-    static func mock() -> CategoryResponse {
-        return CategoryResponse(categoryId: 1, name: "小学校科学", image: "9.png")
+extension CategoryInfo {
+    static func mock() -> CategoryInfo {
+        return CategoryInfo(categoryId: 1, name: "小学校科学", image: "9.png")
     }
 }
