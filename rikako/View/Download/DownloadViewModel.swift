@@ -18,8 +18,8 @@ class DownloadViewModel: ObservableObject {
             switch result {
             case .success():
                 self?.downloadComplate()
-            case let .failure(error):
-                self?.message = error.localizedDescription
+            case .failure(_):
+                self?.message = "ダウンロードエラー\n時間をあけて再度お試しください。"
                 self?.doneDownload = true
             }
         }

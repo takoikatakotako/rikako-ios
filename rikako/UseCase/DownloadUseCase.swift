@@ -9,12 +9,12 @@ class DownloadUseCase {
     
     func download(categoryId: Int, completion: @escaping (Result<Void, Error>) -> Void) {
         jsonRepository.fetchCategory(categoryId: categoryId)
-            .sink(receiveCompletion: { completion in
-                switch completion {
+            .sink(receiveCompletion: { receiveCompletion in
+                switch receiveCompletion {
                 case .finished:
                     break
                 case let .failure(error):
-                    print(error)
+                    completion(.failure(error))
                     break
                 }
             }, receiveValue: {category in
